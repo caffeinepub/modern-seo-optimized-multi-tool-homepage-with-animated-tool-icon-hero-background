@@ -12,6 +12,7 @@ export default function Footer() {
     { label: 'Home', path: '/' },
     { label: 'About', path: '/about' },
     { label: 'Contact', path: '/contact' },
+    { label: 'Guides', path: '/guides' },
   ];
 
   const toolCategories = [
@@ -80,7 +81,7 @@ export default function Footer() {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={social.ariaLabel}
-                    className="footer-social-link h-9 w-9 rounded-lg bg-secondary flex items-center justify-center text-muted-foreground hover:bg-primary hover:text-primary-foreground transition-all duration-300 hover:scale-110"
+                    className="footer-social-link h-9 w-9 rounded-lg bg-secondary flex items-center justify-center text-muted-foreground hover:bg-primary hover:text-primary-foreground"
                   >
                     <Icon className="h-4 w-4" />
                   </a>
@@ -99,7 +100,7 @@ export default function Footer() {
                 <li key={link.path}>
                   <Link
                     to={link.path}
-                    className="footer-link text-sm text-muted-foreground hover:text-primary hover:translate-x-1 inline-block transition-all duration-300"
+                    className="footer-link text-sm text-muted-foreground hover:text-primary inline-block"
                   >
                     {link.label}
                   </Link>
@@ -134,7 +135,7 @@ export default function Footer() {
                 <li key={link.path}>
                   <Link
                     to={link.path}
-                    className="footer-link text-sm text-muted-foreground hover:text-primary hover:translate-x-1 inline-block transition-all duration-300"
+                    className="footer-link text-sm text-muted-foreground hover:text-primary inline-block"
                   >
                     {link.label}
                   </Link>

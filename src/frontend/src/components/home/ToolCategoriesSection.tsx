@@ -1,30 +1,27 @@
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
 import { FileText, Image, Calculator, Wrench } from 'lucide-react';
+import ToolIcon from '@/components/shared/ToolIcon';
 
 const categories = [
   {
     title: 'PDF Tools',
     description: 'Merge, split, compress, and convert PDF documents with ease',
-    icon: FileText,
-    color: 'text-primary'
+    icon: FileText
   },
   {
     title: 'Image Tools',
     description: 'Resize, crop, compress, and convert images in multiple formats',
-    icon: Image,
-    color: 'text-primary'
+    icon: Image
   },
   {
     title: 'Calculators',
     description: 'Financial, scientific, and specialized calculators for every need',
-    icon: Calculator,
-    color: 'text-primary'
+    icon: Calculator
   },
   {
     title: 'Utility Tools',
     description: 'Text editors, converters, generators, and productivity utilities',
-    icon: Wrench,
-    color: 'text-primary'
+    icon: Wrench
   }
 ];
 
@@ -34,32 +31,33 @@ export default function ToolCategoriesSection() {
       <div className="container px-4">
         <div className="text-center mb-12 md:mb-16">
           <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4">
-            Explore Tool Categories
+            <span className="heading-accent-subtle">Explore Tool Categories</span>
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
             Discover our organized collection of tools designed to streamline your workflow
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {categories.map((category) => {
-            const Icon = category.icon;
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {categories.map((category, index) => {
+            const floatAnimationClass = `motion-safe:animate-float-delay-${index}`;
+            
             return (
               <Card 
                 key={category.title}
-                className="group cursor-pointer transition-all duration-300 hover:shadow-lg hover:scale-105 hover:border-primary/50 focus-within:ring-2 focus-within:ring-primary focus-within:ring-offset-2"
+                className={`group cursor-pointer card-pink-hover focus-ring tap-target ${floatAnimationClass}`}
                 tabIndex={0}
                 role="button"
               >
-                <CardHeader>
-                  <div className="mb-4 inline-flex p-3 rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-colors">
-                    <Icon className={`h-8 w-8 ${category.color}`} />
+                <CardHeader className="p-5 md:p-6">
+                  <div className="mb-4">
+                    <ToolIcon icon={category.icon} />
                   </div>
-                  <CardTitle className="text-xl group-hover:text-primary transition-colors">
+                  <CardTitle className="text-xl group-hover:text-primary transition-colors duration-300">
                     {category.title}
                   </CardTitle>
                 </CardHeader>
-                <CardContent>
+                <CardContent className="px-5 pb-5 md:px-6 md:pb-6">
                   <CardDescription className="text-base">
                     {category.description}
                   </CardDescription>

@@ -77,7 +77,9 @@ export default function ContactPage() {
   return (
     <div className="container px-4 py-16 max-w-4xl mx-auto">
       <div className="mb-12 text-center">
-        <h1 className="text-4xl md:text-5xl font-bold mb-6">Contact Us</h1>
+        <h1 className="text-4xl md:text-5xl font-bold mb-6">
+          <span className="heading-accent-subtle">Contact Us</span>
+        </h1>
         <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
           Have a question, suggestion, or feedback? We'd love to hear from you. Fill out the form below and we'll get back to you as soon as possible.
         </p>
@@ -109,7 +111,7 @@ export default function ContactPage() {
             </div>
           </div>
 
-          <div className="bg-muted/30 p-6 rounded-lg border">
+          <div className="bg-muted/30 p-6 rounded-lg border card-pink-hover">
             <h3 className="font-semibold text-lg mb-3">Response Time</h3>
             <p className="text-muted-foreground text-sm">
               We typically respond to all inquiries within 24-48 hours during business days. Thank you for your patience.
@@ -117,7 +119,7 @@ export default function ContactPage() {
           </div>
         </div>
 
-        <div className="bg-card border rounded-lg p-8 shadow-sm">
+        <div className="bg-card border rounded-lg p-8 shadow-sm card-pink-hover">
           {isSubmitted ? (
             <div className="text-center py-12">
               <CheckCircle2 className="h-16 w-16 text-green-500 mx-auto mb-4" />
@@ -212,7 +214,7 @@ export default function ContactPage() {
                 )}
               </div>
 
-              <Button type="submit" className="w-full" size="lg">
+              <Button type="submit" className="w-full btn-primary-glow" size="lg">
                 Send Message
               </Button>
             </form>

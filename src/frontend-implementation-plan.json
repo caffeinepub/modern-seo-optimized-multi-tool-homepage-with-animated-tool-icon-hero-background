@@ -1,127 +1,166 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "SEO-optimized tool page: PDF to Word online free",
+  "title": "Mobile UX improvements: tap targets, sticky bottom category nav, performance, one-column layouts, and swipe discovery",
   "requirements": [
     {
-      "id": "REQ-18",
-      "summary": "Create a dedicated, SEO-friendly, mobile-responsive landing page for the \"PDF to Word online free\" tool using existing site layout patterns and the primary theme color.",
+      "id": "REQ-1",
+      "summary": "Make mobile touch targets larger and more accessible across buttons, clickable cards, and key tool-page actions.",
       "acceptanceCriteria": [
-        "A new page component exists for the \"PDF to Word online free\" tool and renders correctly on desktop and mobile.",
-        "The page styling uses the existing Tailwind/Shadcn design system and clearly reflects the primary theme color (#eb347d) via the existing `primary` token usage (e.g., accents, buttons, icon highlights).",
-        "All user-facing text on the page is in English and is polished and SEO-friendly without keyword stuffing."
+        "On screens <768px wide, primary and secondary buttons have a minimum comfortable tap area (no cramped text-only targets).",
+        "Clickable Card-based surfaces used as buttons (e.g., tool/category cards) have sufficient padding and a clear focus-visible ring for keyboard accessibility.",
+        "Tool pages (e.g., Image Compressor, PDF to Word) remain visually balanced after touch-target changes with no overflow/clipping."
       ],
       "file_operations": [
         {
-          "path": "frontend/src/pages/tools/PdfToWordOnlineFreePage.tsx",
-          "operation": "create",
-          "description": "Create the new tool landing page with a modern responsive layout (container widths, typography, spacing) matching existing pages (e.g., About/Contact). Use the shadcn-ui component library (e.g., Card/Button/Badge-like patterns) and Tailwind `text-primary`/`bg-primary` accents to reflect the theme. Verify the component's usage instructions before implementing."
-        }
-      ]
-    },
-    {
-      "id": "REQ-19",
-      "summary": "Add client-side routing so the new tool page is reachable under a clean /tools/ path via the app route list.",
-      "acceptanceCriteria": [
-        "Navigating directly to the new tool URL renders the tool page instead of the 404 page.",
-        "Internal navigation using the app router works (no full page reload required)."
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/App.tsx",
+          "path": "frontend/src/index.css",
           "operation": "modify",
-          "description": "Register a new route entry for the tool page under a descriptive path such as `/tools/pdf-to-word-online-free`, rendering the new PdfToWordOnlineFreePage component."
-        }
-      ]
-    },
-    {
-      "id": "REQ-20",
-      "summary": "Implement on-page SEO for the tool route by updating document title and meta description while the tool page is active, with cleanup on navigation.",
-      "acceptanceCriteria": [
-        "When visiting the tool page, `document.title` is updated to include \"PDF to Word online free\".",
-        "When visiting the tool page, the `<meta name=\"description\">` content is updated to an SEO-optimized description that includes \"PDF to Word online free\".",
-        "Navigating away from the tool page restores the appropriate title/description for other routes (at minimum, the homepage values from `frontend/index.html`)."
-      ],
-      "file_operations": [
+          "description": "Add reusable mobile tap-target and focus-visible utility classes (e.g., minimum height/padding for interactive controls, consistent focus ring styling) and ensure reduced-motion-friendly transitions where applicable."
+        },
         {
-          "path": "frontend/src/hooks/usePageSeo.ts",
-          "operation": "create",
-          "description": "Add a lightweight hook that sets `document.title` and updates/creates the `<meta name=\"description\">` tag when mounted, storing initial values (from runtime DOM, matching `frontend/index.html`) and restoring them on unmount."
+          "path": "frontend/src/components/home/FeaturedToolsGrid.tsx",
+          "operation": "modify",
+          "description": "Increase padding and minimum interactive area for featured tool cards on mobile, and ensure keyboard focus styling is visible (focus-visible ring). Use shadcn-ui Card primitives to keep consistent visuals. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/home/ToolCategoriesSection.tsx",
+          "operation": "modify",
+          "description": "Increase padding and minimum interactive area for category cards on mobile, and ensure keyboard focus styling is visible (focus-visible ring). Use shadcn-ui Card primitives to keep consistent visuals. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/pages/tools/ImageCompressorOnlineFreePage.tsx",
+          "operation": "modify",
+          "description": "Ensure tool-page primary/secondary actions and upload surface are tap-friendly on mobile (apply min-height/padding utilities to the upload area, primary CTA, and reset button) while preserving layout balance. Use shadcn-ui Button for consistent sizing. Verify the component's usage instructions before implementing."
         },
         {
           "path": "frontend/src/pages/tools/PdfToWordOnlineFreePage.tsx",
           "operation": "modify",
-          "description": "Use the new usePageSeo hook to set an SEO-optimized title and meta description that explicitly include \"PDF to Word online free\" while this page is rendered."
-        }
-      ]
-    },
-    {
-      "id": "REQ-21",
-      "summary": "Add a UI-driven PDF-to-Word conversion interface (PDF-only selection, convert action, loading/progress, and demo download result) with accessible controls.",
-      "acceptanceCriteria": [
-        "The interface accepts only .pdf files (client-side validation) and shows a helpful error message for invalid types.",
-        "The Convert button is disabled until a valid PDF is selected.",
-        "A conversion state is shown (e.g., progress indicator/spinner) after clicking Convert.",
-        "After completion, a result area is shown with a Download button (may download a placeholder/demo file if real conversion is not implemented).",
-        "The UI uses accessible labels, focus states, and clear contrast for interactive elements."
-      ],
-      "file_operations": [
+          "description": "Ensure tool-page primary/secondary actions and upload surface are tap-friendly on mobile (apply min-height/padding utilities to the upload area, primary CTA, and reset button) while preserving layout balance. Use shadcn-ui Button for consistent sizing. Verify the component's usage instructions before implementing."
+        },
         {
-          "path": "frontend/src/pages/tools/PdfToWordOnlineFreePage.tsx",
+          "path": "frontend/src/pages/tools/ToolLandingOnlineFreeTemplate.tsx",
           "operation": "modify",
-          "description": "Implement the Tool Interface section: drag-and-drop + file picker restricted to PDF, selected file details, Convert CTA, simulated progress/loading state, and a clearly labeled demo result area with a Download action (e.g., generating a placeholder .docx-like blob). Use shadcn-ui styled building blocks (e.g., Card/Button/Input/Label patterns) and Tailwind focus rings for accessibility. Verify the component's usage instructions before implementing."
+          "description": "Audit and adjust interactive link/card touch targets inside the tool landing template (e.g., related tools links) for mobile-friendly padding and consistent focus-visible styling. Verify the component's usage instructions before implementing."
         }
       ]
     },
     {
-      "id": "REQ-22",
-      "summary": "Add a step-by-step usage section with clear numbered instructions aligned to the on-page interface.",
+      "id": "REQ-2",
+      "summary": "Add a mobile-only sticky bottom category navigation that is accessible and does not cover important page actions.",
       "acceptanceCriteria": [
-        "The section contains a clear heading and at least 4 concise numbered steps.",
-        "Steps match the actual UI controls and terminology on the page (e.g., Upload/Select PDF, Convert, Download)."
+        "On small screens, a bottom navigation bar is fixed/sticky and remains available while scrolling.",
+        "The nav includes the main tool categories with icons and English labels.",
+        "The nav does not block key page actions (e.g., primary CTA buttons); content has adequate bottom padding when the nav is present.",
+        "All nav items are keyboard-focusable with visible focus styling and have accessible names."
       ],
       "file_operations": [
         {
-          "path": "frontend/src/pages/tools/PdfToWordOnlineFreePage.tsx",
-          "operation": "modify",
-          "description": "Add a \"Step-by-step usage\" section with at least 4 numbered steps that match the page’s UI terminology (Select/Drop PDF → Convert → Wait for completion → Download demo result)."
-        }
-      ]
-    },
-    {
-      "id": "REQ-23",
-      "summary": "Add a benefits section using a responsive card/grid layout with icons and subtle hover transitions consistent with the site.",
-      "acceptanceCriteria": [
-        "The section contains a clear heading and a set of benefit items (at least 4).",
-        "Benefit items are presented in a responsive grid and include an icon and short description.",
-        "Hover/focus styling is present and consistent with existing components (subtle elevation/border/primary accent)."
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/pages/tools/PdfToWordOnlineFreePage.tsx",
-          "operation": "modify",
-          "description": "Add a \"Benefits\" section with at least 4 items in a responsive grid, each including an icon (e.g., lucide-react) and short copy. Use shadcn-ui Card-like styling and lightweight hover transitions (shadow/border/primary accents). Verify the component's usage instructions before implementing."
-        }
-      ]
-    },
-    {
-      "id": "REQ-24",
-      "summary": "Add an accessible FAQ accordion with at least 6 relevant Q&A items without overstating simulated conversion capabilities.",
-      "acceptanceCriteria": [
-        "The FAQ section contains at least 6 Q&A items relevant to PDF-to-Word conversion.",
-        "FAQ items are expandable/collapsible and keyboard accessible (focusable triggers, Enter/Space toggles).",
-        "FAQ copy is clear, accurate, and does not promise capabilities the tool does not implement (if conversion is simulated, the FAQ must not imply real conversion is performed)."
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/components/tools/AccessibleAccordion.tsx",
+          "path": "frontend/src/components/navigation/MobileCategoryBottomNav.tsx",
           "operation": "create",
-          "description": "Create a lightweight, accessible accordion component (keyboard operable triggers with appropriate ARIA attributes, focus states, and Tailwind styling aligned to shadcn-ui tokens). Use subtle transitions only. Verify the component's usage instructions before implementing."
+          "description": "Create a mobile-only sticky bottom navigation component listing tool categories (PDF Tools, Image Tools, Calculators, Utility Tools) with icons + English labels, keyboard focus styles, and accessible names (aria-label). Use shadcn-ui Button (or composed shadcn-ui patterns) for consistent tap targets. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/layout/AppLayout.tsx",
+          "operation": "modify",
+          "description": "Wire the MobileCategoryBottomNav into the shared layout and add mobile-only bottom padding/spacing to the main content so the sticky nav never covers CTAs (including tool-page primary buttons near the bottom)."
+        },
+        {
+          "path": "frontend/src/index.css",
+          "operation": "modify",
+          "description": "Add global helpers for sticky bottom nav spacing (including safe-area inset handling) and ensure focus-visible styling is consistent for nav items."
+        }
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "summary": "Improve mobile performance by lazy-loading non-critical media, reducing expensive visual effects on mobile, and respecting prefers-reduced-motion.",
+      "acceptanceCriteria": [
+        "Non-critical images in page content use lazy-loading where applicable, and above-the-fold visuals remain fast.",
+        "Mobile initial render avoids expensive effects where possible (or degrades them) without breaking layout.",
+        "Animations and transitions respect prefers-reduced-motion (reduced motion results in no/less animation)."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/tools/ImageCompressorOnlineFreePage.tsx",
+          "operation": "modify",
+          "description": "Optimize preview media loading by setting non-critical preview image attributes (e.g., lazy-loading/async decoding where applicable) and ensure any motion indicators degrade under prefers-reduced-motion."
+        },
+        {
+          "path": "frontend/src/components/home/ToolIconParticles.tsx",
+          "operation": "modify",
+          "description": "Reduce initial render work on mobile by conditionally degrading/disabling the canvas particle animation on small screens and/or when prefers-reduced-motion is enabled, while keeping the hero layout intact."
+        },
+        {
+          "path": "frontend/src/components/home/HeroSection.tsx",
+          "operation": "modify",
+          "description": "Degrade or simplify expensive visual effects on mobile (e.g., reduce/disable heavy blurred gradient accents for small screens) while preserving the hero’s readability and layout."
+        },
+        {
+          "path": "frontend/src/index.css",
+          "operation": "modify",
+          "description": "Ensure animations/transitions used by shared UI effect classes properly respect prefers-reduced-motion (reduce or remove motion where necessary) without breaking layout."
+        }
+      ]
+    },
+    {
+      "id": "REQ-4",
+      "summary": "Ensure key sections render as a clean one-column layout on small screens with readable spacing and no overflow.",
+      "acceptanceCriteria": [
+        "On screens <640px, major grid sections render in a single-column layout with consistent vertical spacing.",
+        "Text remains readable without horizontal scrolling; no card content overflows its container on mobile.",
+        "Tool landing pages and tool interfaces remain centered and usable on mobile, with no side-by-side layouts that cause crowding."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/home/ToolCategoriesSection.tsx",
+          "operation": "modify",
+          "description": "Verify and adjust mobile grid behavior to ensure categories remain a comfortable one-column stack on <640px, with consistent spacing and no card content overflow."
+        },
+        {
+          "path": "frontend/src/components/home/FeaturedToolsGrid.tsx",
+          "operation": "modify",
+          "description": "Ensure the featured tools section’s mobile layout remains readable and non-cramped (one-column when stacked content is shown) and that card text does not overflow."
+        },
+        {
+          "path": "frontend/src/pages/tools/ToolLandingOnlineFreeTemplate.tsx",
+          "operation": "modify",
+          "description": "Audit tool landing template sections (hero, tool interface, steps/benefits/FAQ/related tools) for small-screen single-column friendliness, preventing cramped side-by-side layouts and eliminating horizontal scrolling."
         },
         {
           "path": "frontend/src/pages/tools/PdfToWordOnlineFreePage.tsx",
           "operation": "modify",
-          "description": "Add an FAQ section using the new AccessibleAccordion with at least 6 Q&A items specific to \"PDF to Word online free\" (privacy, limits, compatibility, quality, troubleshooting). Ensure answers explicitly describe the interface as a demo/simulated conversion where applicable."
+          "description": "Ensure the tool interface content remains centered and mobile-friendly with consistent spacing and no horizontal overflow after touch-target and padding adjustments. Use shadcn-ui components as-is (compose only). Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/pages/tools/ImageCompressorOnlineFreePage.tsx",
+          "operation": "modify",
+          "description": "Ensure the tool interface content (including preview area) remains centered and mobile-friendly with consistent spacing and no horizontal overflow after touch-target and padding adjustments. Use shadcn-ui components as-is (compose only). Verify the component's usage instructions before implementing."
+        }
+      ]
+    },
+    {
+      "id": "REQ-5",
+      "summary": "Add a subtle, performant swipe-friendly discovery surface on mobile using horizontal scroll with snap behavior and reduced-motion support.",
+      "acceptanceCriteria": [
+        "On small screens, at least one key tool discovery surface (featured tools and/or categories) supports horizontal swipe browsing with smooth scrolling and snap behavior.",
+        "Swipe behavior works with touch and trackpad, and does not interfere with vertical page scrolling.",
+        "Motion is subtle and disabled/reduced when prefers-reduced-motion is enabled."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/home/FeaturedToolsGrid.tsx",
+          "operation": "modify",
+          "description": "Implement a mobile-only horizontal swipe row for featured tools using native overflow scrolling + scroll-snap (with a non-snap/grid layout on larger screens). Ensure cards have appropriate snap alignment, touch/trackpad support, and do not interfere with vertical scrolling."
+        },
+        {
+          "path": "frontend/src/index.css",
+          "operation": "modify",
+          "description": "Add any needed CSS helpers for a smooth, subtle swipe experience (e.g., scroll-snap behavior, optional scrollbar styling) and ensure reduced-motion disables any non-essential motion enhancements."
+        },
+        {
+          "path": "frontend/src/pages/HomePage.tsx",
+          "operation": "modify",
+          "description": "Ensure the updated swipe discovery surface is correctly composed on the homepage and remains a key mobile tool discovery element (no orphaned UI)."
         }
       ]
     }

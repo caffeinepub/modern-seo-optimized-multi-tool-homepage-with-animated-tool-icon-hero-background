@@ -31,11 +31,15 @@ export default function ToolIconParticles() {
   const particlesRef = useRef<Particle[]>([]);
   const animationFrameRef = useRef<number | null>(null);
   const prefersReducedMotion = useRef(false);
+  const isMobile = useRef(false);
 
   useEffect(() => {
     // Check for reduced motion preference
     const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
     prefersReducedMotion.current = mediaQuery.matches;
+
+    // Check if mobile
+    isMobile.current = window.innerWidth < 768;
 
     const handleChange = (e: MediaQueryListEvent) => {
       prefersReducedMotion.current = e.matches;
@@ -52,11 +56,13 @@ export default function ToolIconParticles() {
     const resizeCanvas = () => {
       canvas.width = canvas.offsetWidth;
       canvas.height = canvas.offsetHeight;
+      isMobile.current = window.innerWidth < 768;
       initParticles();
     };
 
     const initParticles = () => {
-      const particleCount = window.innerWidth < 768 ? 15 : 25;
+      // Reduce particles on mobile for performance
+      const particleCount = isMobile.current ? 8 : 25;
       particlesRef.current = [];
 
       for (let i = 0; i < particleCount; i++) {
@@ -107,8 +113,8 @@ export default function ToolIconParticles() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
       particlesRef.current.forEach((particle) => {
-        // Update position
-        if (!prefersReducedMotion.current) {
+        // Update position - disable on mobile or reduced motion
+        if (!prefersReducedMotion.current && !isMobile.current) {
           particle.x += particle.vx;
           particle.y += particle.vy;
           particle.rotation += particle.rotationSpeed;
@@ -142,7 +148,7 @@ export default function ToolIconParticles() {
   return (
     <canvas
       ref={canvasRef}
-      className="absolute inset-0 w-full h-full pointer-events-none"
+      className="absolute inset-0 w-full h-full"
       aria-hidden="true"
     />
   );

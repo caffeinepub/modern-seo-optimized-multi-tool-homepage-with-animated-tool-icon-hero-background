@@ -14,7 +14,7 @@ export default function NotFoundPage() {
       </div>
       
       <Link to="/">
-        <Button size="lg" className="gap-2">
+        <Button size="lg" className="gap-2 btn-primary-glow">
           <Home className="h-5 w-5" />
           Back to Home
         </Button>

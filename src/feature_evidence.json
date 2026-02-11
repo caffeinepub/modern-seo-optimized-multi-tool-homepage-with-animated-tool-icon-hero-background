@@ -2,10 +2,15 @@
   "kind": "feature_evidence_report",
   "features": [
     {
-      "featureId": "feature-add-a-new-dedicated-tool-landing-page-for-the-keyword-pdf-to-word-online-free-with-a-modern-mobile-responsive-layout-styled-consistently-with-the-site-theme-primary-color-eb347d-and-existing-page-patterns-container-widths-typography-cards-spacing",
-      "featureTitle": "Add a new dedicated tool landing page for the keyword \"PDF to Word online free\" with a modern, mobile-responsive layout styled consistently with the site theme (primary color #eb347d) and existing page patterns (container widths, typography, cards, spacing).",
+      "featureId": "feature-increase-mobile-touch-target-sizes-across-interactive-controls-buttons-clickable-cards-links-to-be-tap-friendly-ensuring-primary-actions-on-tool-pages-e-g-upload-area-primary-cta-buttons-secondary-reset-buttons-are-comfortable-to-use-on-small-screens",
+      "featureTitle": "Increase mobile touch target sizes across interactive controls (buttons, clickable cards, links) to be tap-friendly, ensuring primary actions on tool pages (e.g., upload area, primary CTA buttons, secondary/reset buttons) are comfortable to use on small screens.",
       "files": [
-        "frontend/src/pages/tools/PdfToWordOnlineFreePage.tsx"
+        "frontend/src/components/home/FeaturedToolsGrid.tsx",
+        "frontend/src/components/home/ToolCategoriesSection.tsx",
+        "frontend/src/index.css",
+        "frontend/src/pages/tools/ImageCompressorOnlineFreePage.tsx",
+        "frontend/src/pages/tools/PdfToWordOnlineFreePage.tsx",
+        "frontend/src/pages/tools/ToolLandingOnlineFreeTemplate.tsx"
       ],
       "components": [
         "core-infrastructure@1.0.2",
@@ -15,15 +20,17 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-18"
+        "REQ-1"
       ],
       "confidence": "high"
     },
     {
-      "featureId": "feature-add-client-side-routing-for-the-new-tool-page-and-ensure-it-is-reachable-via-a-clean-descriptive-path-e-g-under-a-tools-path-update-frontend-src-app-tsx-route-list-to-include-the-new-tool-route",
-      "featureTitle": "Add client-side routing for the new tool page and ensure it is reachable via a clean, descriptive path (e.g., under a /tools/ path). Update `frontend/src/App.tsx` route list to include the new tool route.",
+      "featureId": "feature-add-a-sticky-bottom-navigation-on-mobile-that-provides-quick-access-to-tool-categories-e-g-pdf-tools-image-tools-calculators-utility-tools-the-bottom-nav-must-be-visible-only-on-small-screens-must-not-cover-important-ctas-and-must-include-an-accessible-interaction-model-focus-states-labels",
+      "featureTitle": "Add a sticky bottom navigation on mobile that provides quick access to tool categories (e.g., PDF Tools, Image Tools, Calculators, Utility Tools). The bottom nav must be visible only on small screens, must not cover important CTAs, and must include an accessible interaction model (focus states, labels).",
       "files": [
-        "frontend/src/App.tsx"
+        "frontend/src/components/layout/AppLayout.tsx",
+        "frontend/src/components/navigation/MobileCategoryBottomNav.tsx",
+        "frontend/src/index.css"
       ],
       "components": [
         "core-infrastructure@1.0.2",
@@ -33,16 +40,18 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-19"
+        "REQ-2"
       ],
       "confidence": "high"
     },
     {
-      "featureId": "feature-implement-on-page-seo-for-the-new-tool-route-by-setting-an-seo-optimized-document-title-and-meta-description-that-explicitly-include-the-phrase-pdf-to-word-online-free-when-the-tool-page-is-active",
-      "featureTitle": "Implement on-page SEO for the new tool route by setting an SEO-optimized document title and meta description that explicitly include the phrase \"PDF to Word online free\" when the tool page is active.",
+      "featureId": "feature-optimize-mobile-performance-for-images-and-icons-by-reducing-unnecessary-work-during-initial-render-and-ensuring-media-loads-efficiently-e-g-lazy-loading-non-critical-images-minimizing-heavy-visual-effects-on-mobile-and-respecting-prefers-reduced-motion",
+      "featureTitle": "Optimize mobile performance for images and icons by reducing unnecessary work during initial render and ensuring media loads efficiently (e.g., lazy-loading non-critical images, minimizing heavy visual effects on mobile, and respecting prefers-reduced-motion).",
       "files": [
-        "frontend/src/hooks/usePageSeo.ts",
-        "frontend/src/pages/tools/PdfToWordOnlineFreePage.tsx"
+        "frontend/src/components/home/HeroSection.tsx",
+        "frontend/src/components/home/ToolIconParticles.tsx",
+        "frontend/src/index.css",
+        "frontend/src/pages/tools/ImageCompressorOnlineFreePage.tsx"
       ],
       "components": [
         "core-infrastructure@1.0.2",
@@ -52,15 +61,19 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-20"
+        "REQ-3"
       ],
       "confidence": "high"
     },
     {
-      "featureId": "feature-add-a-tool-interface-section-to-the-tool-page-that-visually-represents-a-pdf-to-word-conversion-workflow-including-file-picker-drag-and-drop-area-pdf-only-selected-file-details-a-primary-convert-action-progress-loading-state-and-a-clear-result-area-with-a-download-action-ui-driven-if-actual-conversion-is-not-implemented-label-the-output-clearly-as-a-demo-simulated-result-to-avoid-misleading-users",
-      "featureTitle": "Add a \"Tool Interface\" section to the tool page that visually represents a PDF-to-Word conversion workflow, including: file picker/drag-and-drop area (PDF only), selected file details, a primary \"Convert\" action, progress/loading state, and a clear result area with a \"Download\" action (UI-driven). If actual conversion is not implemented, label the output clearly as a demo/simulated result to avoid misleading users.",
+      "featureId": "feature-ensure-a-clean-one-column-layout-on-small-screens-for-key-content-sections-home-tool-surfaces-and-tool-pages-preventing-multi-column-grids-from-feeling-cramped-and-ensuring-readable-spacing-typography-on-mobile",
+      "featureTitle": "Ensure a clean one-column layout on small screens for key content sections (home tool surfaces and tool pages), preventing multi-column grids from feeling cramped and ensuring readable spacing/typography on mobile.",
       "files": [
-        "frontend/src/pages/tools/PdfToWordOnlineFreePage.tsx"
+        "frontend/src/components/home/FeaturedToolsGrid.tsx",
+        "frontend/src/components/home/ToolCategoriesSection.tsx",
+        "frontend/src/pages/tools/ImageCompressorOnlineFreePage.tsx",
+        "frontend/src/pages/tools/PdfToWordOnlineFreePage.tsx",
+        "frontend/src/pages/tools/ToolLandingOnlineFreeTemplate.tsx"
       ],
       "components": [
         "core-infrastructure@1.0.2",
@@ -70,15 +83,16 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-21"
+        "REQ-4"
       ],
       "confidence": "high"
     },
     {
-      "featureId": "feature-add-a-step-by-step-usage-section-to-the-tool-page-with-clear-numbered-steps-explaining-how-to-use-the-pdf-to-word-tool-written-in-concise-user-friendly-english-and-aligned-with-the-interface-shown-on-the-page",
-      "featureTitle": "Add a \"Step-by-step usage\" section to the tool page with clear numbered steps explaining how to use the PDF to Word tool, written in concise, user-friendly English and aligned with the interface shown on the page.",
+      "featureId": "feature-add-smooth-swipe-friendly-interactions-animations-on-mobile-for-browsing-tool-category-content-e-g-horizontal-swipeable-rows-or-carousels-with-scroll-snap-while-keeping-motion-subtle-and-performant",
+      "featureTitle": "Add smooth swipe-friendly interactions/animations on mobile for browsing tool/category content (e.g., horizontal swipeable rows or carousels with scroll-snap), while keeping motion subtle and performant.",
       "files": [
-        "frontend/src/pages/tools/PdfToWordOnlineFreePage.tsx"
+        "frontend/src/components/home/FeaturedToolsGrid.tsx",
+        "frontend/src/index.css"
       ],
       "components": [
         "core-infrastructure@1.0.2",
@@ -88,43 +102,7 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-22"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-add-a-benefits-section-to-the-tool-page-describing-the-advantages-of-using-the-tool-e-g-convenience-no-installation-privacy-first-messaging-consistent-with-the-site-using-a-modern-card-grid-presentation-with-icons-and-subtle-hover-transition-effects-consistent-with-the-rest-of-the-site",
-      "featureTitle": "Add a \"Benefits\" section to the tool page describing the advantages of using the tool (e.g., convenience, no installation, privacy-first messaging consistent with the site), using a modern card/grid presentation with icons and subtle hover/transition effects consistent with the rest of the site.",
-      "files": [
-        "frontend/src/pages/tools/PdfToWordOnlineFreePage.tsx"
-      ],
-      "components": [
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-23"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-add-an-faq-section-to-the-tool-page-with-common-questions-and-answers-specific-to-pdf-to-word-online-free-e-g-privacy-file-size-limits-compatibility-quality-troubleshooting-use-an-accessible-accordion-collapsible-ui-pattern-consistent-with-the-project-s-component-library",
-      "featureTitle": "Add an FAQ section to the tool page with common questions and answers specific to \"PDF to Word online free\" (e.g., privacy, file size limits, compatibility, quality, troubleshooting). Use an accessible accordion/collapsible UI pattern consistent with the project’s component library.",
-      "files": [
-        "frontend/src/pages/tools/PdfToWordOnlineFreePage.tsx"
-      ],
-      "components": [
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-24"
+        "REQ-5"
       ],
       "confidence": "high"
     }

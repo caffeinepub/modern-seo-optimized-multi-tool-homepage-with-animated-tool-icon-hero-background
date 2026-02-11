@@ -1,13 +1,13 @@
 # Specification
 
 ## Summary
-**Goal:** Add an SEO-optimized, mobile-responsive tool landing page for the keyword “PDF to Word online free” with a themed UI and a demo conversion interface.
+**Goal:** Improve mobile UX and performance by making interactions easier to tap, navigation faster to reach, layouts cleaner on small screens, and tool discovery swipe-friendly.
 
 **Planned changes:**
-- Create a new dedicated tool page component for “PDF to Word online free”, styled to match existing site patterns and the primary theme color (#eb347d).
-- Add client-side routing for the new tool page under a clean `/tools/...` path and register the route in `frontend/src/App.tsx`.
-- Implement on-page SEO for the route by setting `document.title` and the meta description to include “PDF to Word online free”, and restore previous values when navigating away.
-- Build a “Tool Interface” section with PDF-only file selection/drag-and-drop, file details, disabled-until-valid Convert action, progress/loading state, and a clearly labeled demo/simulated result area with Download action.
-- Add supporting content sections: Step-by-step usage (numbered steps), Benefits (icon card/grid), and an accessible FAQ accordion (at least 6 Q&As) aligned with simulated vs real capabilities.
+- Increase touch target sizes and padding for mobile across buttons, links, and clickable card surfaces while maintaining balanced layouts on tool pages.
+- Add a mobile-only sticky bottom navigation for tool categories with icons, English labels, and accessible focus/label behavior; ensure it does not cover key CTAs by adding appropriate bottom spacing.
+- Optimize mobile rendering performance for images/icons (e.g., lazy-load non-critical visuals, reduce expensive effects on mobile, and respect `prefers-reduced-motion`).
+- Update key mobile layouts to a clean single-column presentation on small screens with readable typography and no overflow/clipping.
+- Add subtle, performant swipe-friendly browsing (e.g., horizontal swipe row/carousel with scroll-snap) for at least one key tool/category discovery surface, respecting `prefers-reduced-motion`.
 
-**User-visible outcome:** Users can navigate to a new “PDF to Word online free” tool page, see SEO-friendly metadata, interact with a polished PDF-to-Word conversion demo UI, and read clear usage steps, benefits, and FAQs.
+**User-visible outcome:** On mobile, controls are easier to tap, categories are quickly accessible via a sticky bottom nav, pages load and animate more smoothly, content reads well in a one-column layout, and users can swipe through featured tools/categories without fighting vertical scrolling.

@@ -3,7 +3,9 @@ import { Wrench, Shield, Zap, Users } from 'lucide-react';
 export default function AboutPage() {
   return (
     <div className="container px-4 py-16 max-w-4xl mx-auto">
-      <h1 className="text-4xl md:text-5xl font-bold mb-6">About Us</h1>
+      <h1 className="text-4xl md:text-5xl font-bold mb-6">
+        <span className="heading-accent-subtle">About Us</span>
+      </h1>
       
       <div className="prose prose-lg max-w-none">
         <p className="text-xl text-muted-foreground mb-12">
@@ -57,19 +59,19 @@ export default function AboutPage() {
             Why Choose Us
           </h2>
           <div className="grid md:grid-cols-2 gap-6">
-            <div className="bg-muted/30 p-6 rounded-lg">
+            <div className="bg-muted/30 p-6 rounded-lg card-pink-hover">
               <h3 className="text-xl font-semibold mb-2">100% Free</h3>
               <p className="text-muted-foreground">No hidden fees, no subscriptions, no credit card required. All tools are completely free to use.</p>
             </div>
-            <div className="bg-muted/30 p-6 rounded-lg">
+            <div className="bg-muted/30 p-6 rounded-lg card-pink-hover">
               <h3 className="text-xl font-semibold mb-2">Privacy First</h3>
               <p className="text-muted-foreground">Your files are processed locally in your browser. We don't store, access, or transmit your data.</p>
             </div>
-            <div className="bg-muted/30 p-6 rounded-lg">
+            <div className="bg-muted/30 p-6 rounded-lg card-pink-hover">
               <h3 className="text-xl font-semibold mb-2">No Installation</h3>
               <p className="text-muted-foreground">Access all tools instantly from any modern browser. No downloads or installations required.</p>
             </div>
-            <div className="bg-muted/30 p-6 rounded-lg">
+            <div className="bg-muted/30 p-6 rounded-lg card-pink-hover">
               <h3 className="text-xl font-semibold mb-2">Always Available</h3>
               <p className="text-muted-foreground">Our tools are available 24/7 from any device with an internet connection.</p>
             </div>
@@ -111,7 +113,7 @@ export default function AboutPage() {
           </p>
         </section>
 
-        <section className="bg-primary/5 p-8 rounded-lg border border-primary/20">
+        <section className="bg-primary/5 p-8 rounded-lg border border-primary/20 card-pink-hover">
           <h2 className="text-2xl font-semibold mb-4">Get in Touch</h2>
           <p className="text-muted-foreground leading-relaxed">
             We value your feedback and suggestions. Whether you have a feature request, found a bug, or just want to say hello, we'd love to hear from you. Visit our <a href="/contact" className="text-primary hover:underline font-medium">Contact page</a> to get in touch with our team.

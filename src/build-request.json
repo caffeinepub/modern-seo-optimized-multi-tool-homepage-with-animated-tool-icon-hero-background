@@ -1,0 +1,157 @@
+{
+  "kind": "build_request",
+  "title": "Add SEO-optimized tool page: PDF to Word online free",
+  "priority": "normal",
+  "requirements": [
+    {
+      "id": "REQ-18",
+      "text": "Add a new dedicated tool landing page for the keyword \"PDF to Word online free\" with a modern, mobile-responsive layout styled consistently with the site theme (primary color #eb347d) and existing page patterns (container widths, typography, cards, spacing).",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-4"
+        ],
+        "quotes": [
+          "Create an SEO optimized tool page for:\n\"PDF to Word online free\"\n\nAdd:\nTool interface\nStep by step usage\nBenefits\nFAQ section\nModern UI with theme #eb347d"
+        ]
+      },
+      "acceptanceCriteria": [
+        "A new page component exists for the \"PDF to Word online free\" tool and renders correctly on desktop and mobile.",
+        "The page styling uses the existing Tailwind/Shadcn design system and clearly reflects the primary theme color (#eb347d) via the existing `primary` token usage (e.g., accents, buttons, icon highlights).",
+        "All user-facing text on the page is in English and is polished and SEO-friendly without keyword stuffing."
+      ]
+    },
+    {
+      "id": "REQ-19",
+      "text": "Add client-side routing for the new tool page and ensure it is reachable via a clean, descriptive path (e.g., under a /tools/ path). Update `frontend/src/App.tsx` route list to include the new tool route.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-4"
+        ],
+        "quotes": [
+          "Create an SEO optimized tool page for:\n\"PDF to Word online free\""
+        ]
+      },
+      "acceptanceCriteria": [
+        "Navigating directly to the new tool URL renders the tool page instead of the 404 page.",
+        "Internal navigation using the app router works (no full page reload required)."
+      ]
+    },
+    {
+      "id": "REQ-20",
+      "text": "Implement on-page SEO for the new tool route by setting an SEO-optimized document title and meta description that explicitly include the phrase \"PDF to Word online free\" when the tool page is active.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-4"
+        ],
+        "quotes": [
+          "Create an SEO optimized tool page for:\n\"PDF to Word online free\""
+        ]
+      },
+      "acceptanceCriteria": [
+        "When visiting the tool page, `document.title` is updated to include \"PDF to Word online free\".",
+        "When visiting the tool page, the `<meta name=\"description\">` content is updated to an SEO-optimized description that includes \"PDF to Word online free\".",
+        "Navigating away from the tool page restores the appropriate title/description for other routes (at minimum, the homepage values from `frontend/index.html`)."
+      ]
+    },
+    {
+      "id": "REQ-21",
+      "text": "Add a \"Tool Interface\" section to the tool page that visually represents a PDF-to-Word conversion workflow, including: file picker/drag-and-drop area (PDF only), selected file details, a primary \"Convert\" action, progress/loading state, and a clear result area with a \"Download\" action (UI-driven). If actual conversion is not implemented, label the output clearly as a demo/simulated result to avoid misleading users.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-4"
+        ],
+        "quotes": [
+          "Add:\nTool interface"
+        ]
+      },
+      "acceptanceCriteria": [
+        "The interface accepts only .pdf files (client-side validation) and shows a helpful error message for invalid types.",
+        "The Convert button is disabled until a valid PDF is selected.",
+        "A conversion state is shown (e.g., progress indicator/spinner) after clicking Convert.",
+        "After completion, a result area is shown with a Download button (may download a placeholder/demo file if real conversion is not implemented).",
+        "The UI uses accessible labels, focus states, and clear contrast for interactive elements."
+      ]
+    },
+    {
+      "id": "REQ-22",
+      "text": "Add a \"Step-by-step usage\" section to the tool page with clear numbered steps explaining how to use the PDF to Word tool, written in concise, user-friendly English and aligned with the interface shown on the page.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-4"
+        ],
+        "quotes": [
+          "Add:\nStep by step usage"
+        ]
+      },
+      "acceptanceCriteria": [
+        "The section contains a clear heading and at least 4 concise numbered steps.",
+        "Steps match the actual UI controls and terminology on the page (e.g., Upload/Select PDF, Convert, Download)."
+      ]
+    },
+    {
+      "id": "REQ-23",
+      "text": "Add a \"Benefits\" section to the tool page describing the advantages of using the tool (e.g., convenience, no installation, privacy-first messaging consistent with the site), using a modern card/grid presentation with icons and subtle hover/transition effects consistent with the rest of the site.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-4"
+        ],
+        "quotes": [
+          "Add:\nBenefits"
+        ]
+      },
+      "acceptanceCriteria": [
+        "The section contains a clear heading and a set of benefit items (at least 4).",
+        "Benefit items are presented in a responsive grid and include an icon and short description.",
+        "Hover/focus styling is present and consistent with existing components (subtle elevation/border/primary accent)."
+      ]
+    },
+    {
+      "id": "REQ-24",
+      "text": "Add an FAQ section to the tool page with common questions and answers specific to \"PDF to Word online free\" (e.g., privacy, file size limits, compatibility, quality, troubleshooting). Use an accessible accordion/collapsible UI pattern consistent with the project’s component library.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-4"
+        ],
+        "quotes": [
+          "Add:\nFAQ section"
+        ]
+      },
+      "acceptanceCriteria": [
+        "The FAQ section contains at least 6 Q&A items relevant to PDF-to-Word conversion.",
+        "FAQ items are expandable/collapsible and keyboard accessible (focusable triggers, Enter/Space toggles).",
+        "FAQ copy is clear, accurate, and does not promise capabilities the tool does not implement (if conversion is simulated, the FAQ must not imply real conversion is performed)."
+      ]
+    }
+  ],
+  "constraints": [
+    "Frontend immutable paths must not be edited: `frontend/src/hooks/useInternetIdentity.ts`, `frontend/src/hooks/useInternetIdentity.tsx`, `frontend/src/hooks/useActor.ts`, `frontend/src/main.tsx`, and anything under `frontend/src/components/ui`.",
+    "Do not add additional backend canisters/services; keep the backend as a single Motoko actor.",
+    "Do not introduce heavy dependencies that hurt performance; keep animations/transitions lightweight and consistent with existing site patterns."
+  ],
+  "nonGoals": [
+    "Implementing a full, production-grade PDF-to-Word conversion engine (server-side or client-side) is out of scope unless explicitly requested; the tool interface may be UI-only or simulated but must be clearly labeled if simulated.",
+    "Adding new authentication providers beyond Internet Identity is out of scope.",
+    "Adding external databases, third-party storage, or uploading user files to external services is out of scope."
+  ],
+  "imageRequirements": {
+    "required": [],
+    "edits": []
+  },
+  "userProfileUpdate": {
+    "goalsToAdd": [],
+    "goalsToRemove": [],
+    "preferencesToAdd": [],
+    "preferencesToRemove": [],
+    "miscToAdd": [],
+    "miscToRemove": [],
+    "fieldsToSet": {},
+    "fieldsToDelete": []
+  }
+}

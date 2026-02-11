@@ -1,0 +1,129 @@
+{
+  "kind": "implementation_plan",
+  "version": "1.0",
+  "title": "SEO-optimized tool page: PDF to Word online free",
+  "requirements": [
+    {
+      "id": "REQ-18",
+      "summary": "Create a dedicated, SEO-friendly, mobile-responsive landing page for the \"PDF to Word online free\" tool using existing site layout patterns and the primary theme color.",
+      "acceptanceCriteria": [
+        "A new page component exists for the \"PDF to Word online free\" tool and renders correctly on desktop and mobile.",
+        "The page styling uses the existing Tailwind/Shadcn design system and clearly reflects the primary theme color (#eb347d) via the existing `primary` token usage (e.g., accents, buttons, icon highlights).",
+        "All user-facing text on the page is in English and is polished and SEO-friendly without keyword stuffing."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/tools/PdfToWordOnlineFreePage.tsx",
+          "operation": "create",
+          "description": "Create the new tool landing page with a modern responsive layout (container widths, typography, spacing) matching existing pages (e.g., About/Contact). Use the shadcn-ui component library (e.g., Card/Button/Badge-like patterns) and Tailwind `text-primary`/`bg-primary` accents to reflect the theme. Verify the component's usage instructions before implementing."
+        }
+      ]
+    },
+    {
+      "id": "REQ-19",
+      "summary": "Add client-side routing so the new tool page is reachable under a clean /tools/ path via the app route list.",
+      "acceptanceCriteria": [
+        "Navigating directly to the new tool URL renders the tool page instead of the 404 page.",
+        "Internal navigation using the app router works (no full page reload required)."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Register a new route entry for the tool page under a descriptive path such as `/tools/pdf-to-word-online-free`, rendering the new PdfToWordOnlineFreePage component."
+        }
+      ]
+    },
+    {
+      "id": "REQ-20",
+      "summary": "Implement on-page SEO for the tool route by updating document title and meta description while the tool page is active, with cleanup on navigation.",
+      "acceptanceCriteria": [
+        "When visiting the tool page, `document.title` is updated to include \"PDF to Word online free\".",
+        "When visiting the tool page, the `<meta name=\"description\">` content is updated to an SEO-optimized description that includes \"PDF to Word online free\".",
+        "Navigating away from the tool page restores the appropriate title/description for other routes (at minimum, the homepage values from `frontend/index.html`)."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/hooks/usePageSeo.ts",
+          "operation": "create",
+          "description": "Add a lightweight hook that sets `document.title` and updates/creates the `<meta name=\"description\">` tag when mounted, storing initial values (from runtime DOM, matching `frontend/index.html`) and restoring them on unmount."
+        },
+        {
+          "path": "frontend/src/pages/tools/PdfToWordOnlineFreePage.tsx",
+          "operation": "modify",
+          "description": "Use the new usePageSeo hook to set an SEO-optimized title and meta description that explicitly include \"PDF to Word online free\" while this page is rendered."
+        }
+      ]
+    },
+    {
+      "id": "REQ-21",
+      "summary": "Add a UI-driven PDF-to-Word conversion interface (PDF-only selection, convert action, loading/progress, and demo download result) with accessible controls.",
+      "acceptanceCriteria": [
+        "The interface accepts only .pdf files (client-side validation) and shows a helpful error message for invalid types.",
+        "The Convert button is disabled until a valid PDF is selected.",
+        "A conversion state is shown (e.g., progress indicator/spinner) after clicking Convert.",
+        "After completion, a result area is shown with a Download button (may download a placeholder/demo file if real conversion is not implemented).",
+        "The UI uses accessible labels, focus states, and clear contrast for interactive elements."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/tools/PdfToWordOnlineFreePage.tsx",
+          "operation": "modify",
+          "description": "Implement the Tool Interface section: drag-and-drop + file picker restricted to PDF, selected file details, Convert CTA, simulated progress/loading state, and a clearly labeled demo result area with a Download action (e.g., generating a placeholder .docx-like blob). Use shadcn-ui styled building blocks (e.g., Card/Button/Input/Label patterns) and Tailwind focus rings for accessibility. Verify the component's usage instructions before implementing."
+        }
+      ]
+    },
+    {
+      "id": "REQ-22",
+      "summary": "Add a step-by-step usage section with clear numbered instructions aligned to the on-page interface.",
+      "acceptanceCriteria": [
+        "The section contains a clear heading and at least 4 concise numbered steps.",
+        "Steps match the actual UI controls and terminology on the page (e.g., Upload/Select PDF, Convert, Download)."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/tools/PdfToWordOnlineFreePage.tsx",
+          "operation": "modify",
+          "description": "Add a \"Step-by-step usage\" section with at least 4 numbered steps that match the page’s UI terminology (Select/Drop PDF → Convert → Wait for completion → Download demo result)."
+        }
+      ]
+    },
+    {
+      "id": "REQ-23",
+      "summary": "Add a benefits section using a responsive card/grid layout with icons and subtle hover transitions consistent with the site.",
+      "acceptanceCriteria": [
+        "The section contains a clear heading and a set of benefit items (at least 4).",
+        "Benefit items are presented in a responsive grid and include an icon and short description.",
+        "Hover/focus styling is present and consistent with existing components (subtle elevation/border/primary accent)."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/tools/PdfToWordOnlineFreePage.tsx",
+          "operation": "modify",
+          "description": "Add a \"Benefits\" section with at least 4 items in a responsive grid, each including an icon (e.g., lucide-react) and short copy. Use shadcn-ui Card-like styling and lightweight hover transitions (shadow/border/primary accents). Verify the component's usage instructions before implementing."
+        }
+      ]
+    },
+    {
+      "id": "REQ-24",
+      "summary": "Add an accessible FAQ accordion with at least 6 relevant Q&A items without overstating simulated conversion capabilities.",
+      "acceptanceCriteria": [
+        "The FAQ section contains at least 6 Q&A items relevant to PDF-to-Word conversion.",
+        "FAQ items are expandable/collapsible and keyboard accessible (focusable triggers, Enter/Space toggles).",
+        "FAQ copy is clear, accurate, and does not promise capabilities the tool does not implement (if conversion is simulated, the FAQ must not imply real conversion is performed)."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/tools/AccessibleAccordion.tsx",
+          "operation": "create",
+          "description": "Create a lightweight, accessible accordion component (keyboard operable triggers with appropriate ARIA attributes, focus states, and Tailwind styling aligned to shadcn-ui tokens). Use subtle transitions only. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/pages/tools/PdfToWordOnlineFreePage.tsx",
+          "operation": "modify",
+          "description": "Add an FAQ section using the new AccessibleAccordion with at least 6 Q&A items specific to \"PDF to Word online free\" (privacy, limits, compatibility, quality, troubleshooting). Ensure answers explicitly describe the interface as a demo/simulated conversion where applicable."
+        }
+      ]
+    }
+  ]
+}

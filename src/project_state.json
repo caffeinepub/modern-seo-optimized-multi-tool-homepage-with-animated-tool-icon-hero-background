@@ -1,0 +1,306 @@
+{
+  "schemaVersion": "1.0.0",
+  "projectStateVersion": 9,
+  "summary": "Expand the site beyond the homepage and legal/trust pages by adding SEO-optimized dedicated tool landing pages with modern UI (theme #eb347d), including a tool interface, usage steps, benefits, and FAQs.",
+  "architectural_notes": [
+    "Homepage should prioritize performance and mobile responsiveness (fast-loading design).",
+    "Theme color #eb347d is the primary brand accent.",
+    "SEO should target the keyword \"online free tools website\" (meta title/description).",
+    "Add trust/SEO-supporting informational and legal pages (About, Contact, Privacy, Disclaimer, Terms).",
+    "Footer should include links to all informational/legal pages site-wide.",
+    "Global footer should be a 4-column layout including: logo/description/social links, quick links, tool categories, and legal pages; include hover effects and smooth transitions.",
+    "Add SEO-optimized individual tool pages (landing pages) that include: tool interface area, step-by-step usage instructions, benefits, and FAQ sections; use the primary theme color #eb347d for a modern UI."
+  ],
+  "known_issues": [],
+  "isFixRequest": false,
+  "existing_features": [
+    {
+      "id": "feature-create-a-modern-homepage-targeted-to-the-keyword-online-free-tools-website-with-the-following-sections-in-order-1-hero-section-2-intro-content-about-free-online-tools-3-tool-categories-pdf-tools-image-tools-calculators-utility-tools-4-featured-tools-grid",
+      "title": "Create a modern homepage targeted to the keyword \"online free tools website\" with the following sections in order: (1) Hero section, (2) Intro content about free online tools, (3) Tool categories (PDF tools, Image tools, Calculators, Utility tools), (4) Featured tools grid.",
+      "reqIds": [
+        "REQ-1"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-seo-optimized-meta-title-and-meta-description-for-the-homepage-that-explicitly-include-the-keyword-online-free-tools-website",
+      "title": "Add SEO-optimized meta title and meta description for the homepage that explicitly include the keyword \"online free tools website\".",
+      "reqIds": [
+        "REQ-2"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-the-hero-section-with-a-floating-background-of-small-tool-icons-that-behave-like-animated-particles-subtle-drift-parallax-while-keeping-the-hero-headline-and-call-to-action-content-readable-and-accessible",
+      "title": "Implement the hero section with a floating background of small tool icons that behave like animated particles (subtle drift/parallax), while keeping the hero headline and call-to-action content readable and accessible.",
+      "reqIds": [
+        "REQ-3"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-an-intro-content-section-that-explains-what-the-site-offers-free-online-tools-with-copy-written-to-support-seo-for-online-free-tools-website-without-repeating-the-phrase-excessively",
+      "title": "Add an intro content section that explains what the site offers (free online tools), with copy written to support SEO for \"online free tools website\" without repeating the phrase excessively.",
+      "reqIds": [
+        "REQ-4"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-tool-categories-section-with-four-category-cards-tiles-pdf-tools-image-tools-calculators-utility-tools-each-category-should-have-an-icon-short-description-and-interactive-hover-focus-styling",
+      "title": "Add a tool categories section with four category cards/tiles: PDF tools, Image tools, Calculators, Utility tools; each category should have an icon, short description, and interactive hover/focus styling.",
+      "reqIds": [
+        "REQ-5"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-featured-tools-grid-e-g-6-12-items-with-modern-hover-effects-e-g-elevation-border-accent-glow-using-eb347d-subtle-transform-and-clear-tool-labels-keep-items-as-placeholders-no-tool-implementation-required",
+      "title": "Add a featured tools grid (e.g., 6–12 items) with modern hover effects (e.g., elevation, border/accent glow using #eb347d, subtle transform) and clear tool labels; keep items as placeholders (no tool implementation required).",
+      "reqIds": [
+        "REQ-6"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-apply-smooth-animations-and-transitions-across-the-homepage-section-entrance-hover-transitions-button-interactions-while-maintaining-fast-performance-and-avoiding-heavy-dependencies",
+      "title": "Apply smooth animations and transitions across the homepage (section entrance, hover transitions, button interactions) while maintaining fast performance and avoiding heavy dependencies.",
+      "reqIds": [
+        "REQ-7"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-the-homepage-design-is-mobile-responsive-and-visually-cohesive-using-a-distinct-modern-visual-style-built-around-the-primary-theme-color-eb347d-avoid-blue-purple-as-dominant-colors-define-typography-spacing-scale-and-component-styling-and-apply-consistently-across-all-sections",
+      "title": "Ensure the homepage design is mobile-responsive and visually cohesive using a distinct, modern visual style built around the primary theme color #eb347d (avoid blue/purple as dominant colors). Define typography, spacing scale, and component styling and apply consistently across all sections.",
+      "reqIds": [
+        "REQ-8"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-client-side-routing-so-the-app-supports-dedicated-pages-for-home-about-us-about-contact-us-contact-privacy-policy-privacy-disclaimer-disclaimer-and-terms-conditions-terms",
+      "title": "Add client-side routing so the app supports dedicated pages for: Home (/), About Us (/about), Contact Us (/contact), Privacy Policy (/privacy), Disclaimer (/disclaimer), and Terms & Conditions (/terms).",
+      "reqIds": [
+        "REQ-9"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-an-about-us-page-with-professional-trust-building-seo-friendly-english-content-tailored-to-an-online-free-tools-website-without-keyword-stuffing-including-clear-headings-and-sections-such-as-mission-value-what-tools-are-offered-how-the-site-is-maintained-and-a-short-note-about-privacy-security-philosophy",
+      "title": "Create an “About Us” page with professional, trust-building, SEO-friendly English content tailored to an “online free tools website” (without keyword stuffing), including clear headings and sections such as mission/value, what tools are offered, how the site is maintained, and a short note about privacy/security philosophy.",
+      "reqIds": [
+        "REQ-10"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-a-contact-us-page-that-includes-1-professional-supporting-content-how-to-reach-support-typical-response-times-what-information-to-include-and-2-a-simple-contact-form-with-fields-name-email-subject-and-message",
+      "title": "Create a “Contact Us” page that includes (1) professional supporting content (how to reach support, typical response times, what information to include) and (2) a simple contact form with fields: name, email, subject, and message.",
+      "reqIds": [
+        "REQ-11"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-a-detailed-privacy-policy-page-with-professional-english-content-suitable-for-a-tools-website-including-sections-such-as-information-collected-cookies-analytics-if-any-third-party-services-data-retention-security-children-s-privacy-international-users-user-rights-choices-and-contact-information-plus-a-last-updated-line",
+      "title": "Create a detailed “Privacy Policy” page with professional English content suitable for a tools website, including sections such as: information collected, cookies/analytics (if any), third-party services, data retention, security, children’s privacy, international users, user rights/choices, and contact information, plus a “Last updated” line.",
+      "reqIds": [
+        "REQ-12"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-a-detailed-disclaimer-page-with-professional-english-content-including-no-warranty-tool-output-accuracy-limitations-user-responsibility-external-links-disclaimer-and-limitation-of-liability-language-appropriate-for-a-free-online-tools-site",
+      "title": "Create a detailed “Disclaimer” page with professional English content, including: no warranty, tool output accuracy limitations, user responsibility, external links disclaimer, and limitation of liability language appropriate for a free online tools site.",
+      "reqIds": [
+        "REQ-13"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-a-detailed-terms-conditions-page-with-professional-english-content-including-acceptance-of-terms-permitted-use-prohibited-use-abuse-intellectual-property-service-availability-modifications-termination-governing-law-placeholder-language-and-contact-information-plus-a-last-updated-line",
+      "title": "Create a detailed “Terms & Conditions” page with professional English content, including: acceptance of terms, permitted use, prohibited use/abuse, intellectual property, service availability, modifications, termination, governing law placeholder language, and contact information, plus a “Last updated” line.",
+      "reqIds": [
+        "REQ-14"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-global-footer-to-include-links-to-about-us-contact-us-privacy-policy-disclaimer-and-terms-conditions-and-ensure-the-links-work-from-every-page",
+      "title": "Update the global footer to include links to About Us, Contact Us, Privacy Policy, Disclaimer, and Terms & Conditions, and ensure the links work from every page.",
+      "reqIds": [
+        "REQ-15"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-replace-the-current-global-footer-layout-with-a-responsive-4-column-footer-in-frontend-src-components-home-footer-tsx-columns-desktop-4-columns-mobile-stacked-1-column-1-a-logo-at-the-top-use-a-text-based-logo-if-no-image-asset-exists-a-short-website-description-and-social-media-icon-links-for-facebook-twitter-instagram-and-youtube-2-column-2-quick-links-list-with-internal-links-to-home-about-about-and-contact-contact-3-column-3-tool-categories-list-using-the-existing-category-names-pdf-tools-image-tools-calculators-utility-tools-4-column-4-legal-list-with-internal-links-to-privacy-policy-privacy-disclaimer-disclaimer-and-terms-conditions-terms-keep-the-existing-footer-bottom-row-content-copyright-year-and-the-caffeine-ai-attribution-link-below-the-4-column-section-visually-separated-e-g-with-a-divider-border",
+      "title": "Replace the current global footer layout with a responsive 4-column footer in `frontend/src/components/home/Footer.tsx`.\n\nColumns (desktop: 4 columns; mobile: stacked):\n1) Column 1: a logo at the top (use a text-based logo if no image asset exists), a short website description, and social media icon links for Facebook, Twitter, Instagram, and YouTube.\n2) Column 2: “Quick Links” list with internal links to Home (/), About (/about), and Contact (/contact).\n3) Column 3: “Tool Categories” list using the existing category names: PDF Tools, Image Tools, Calculators, Utility Tools.\n4) Column 4: “Legal” list with internal links to Privacy Policy (/privacy), Disclaimer (/disclaimer), and Terms & Conditions (/terms).\n\nKeep the existing footer bottom row content (copyright year and the caffeine.ai attribution link) below the 4-column section, visually separated (e.g., with a divider/border).",
+      "reqIds": [
+        "REQ-16"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-consistent-hover-effects-and-smooth-transitions-for-footer-links-and-social-icons-e-g-color-change-to-primary-subtle-underline-or-opacity-translate-change-while-preserving-accessibility-clear-focus-states-sufficient-contrast",
+      "title": "Add consistent hover effects and smooth transitions for footer links and social icons (e.g., color change to primary, subtle underline or opacity/translate change), while preserving accessibility (clear focus states, sufficient contrast).",
+      "reqIds": [
+        "REQ-17"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-new-dedicated-tool-landing-page-for-the-keyword-pdf-to-word-online-free-with-a-modern-mobile-responsive-layout-styled-consistently-with-the-site-theme-primary-color-eb347d-and-existing-page-patterns-container-widths-typography-cards-spacing",
+      "title": "Add a new dedicated tool landing page for the keyword \"PDF to Word online free\" with a modern, mobile-responsive layout styled consistently with the site theme (primary color #eb347d) and existing page patterns (container widths, typography, cards, spacing).",
+      "reqIds": [
+        "REQ-18"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-client-side-routing-for-the-new-tool-page-and-ensure-it-is-reachable-via-a-clean-descriptive-path-e-g-under-a-tools-path-update-frontend-src-app-tsx-route-list-to-include-the-new-tool-route",
+      "title": "Add client-side routing for the new tool page and ensure it is reachable via a clean, descriptive path (e.g., under a /tools/ path). Update `frontend/src/App.tsx` route list to include the new tool route.",
+      "reqIds": [
+        "REQ-19"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-on-page-seo-for-the-new-tool-route-by-setting-an-seo-optimized-document-title-and-meta-description-that-explicitly-include-the-phrase-pdf-to-word-online-free-when-the-tool-page-is-active",
+      "title": "Implement on-page SEO for the new tool route by setting an SEO-optimized document title and meta description that explicitly include the phrase \"PDF to Word online free\" when the tool page is active.",
+      "reqIds": [
+        "REQ-20"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-tool-interface-section-to-the-tool-page-that-visually-represents-a-pdf-to-word-conversion-workflow-including-file-picker-drag-and-drop-area-pdf-only-selected-file-details-a-primary-convert-action-progress-loading-state-and-a-clear-result-area-with-a-download-action-ui-driven-if-actual-conversion-is-not-implemented-label-the-output-clearly-as-a-demo-simulated-result-to-avoid-misleading-users",
+      "title": "Add a \"Tool Interface\" section to the tool page that visually represents a PDF-to-Word conversion workflow, including: file picker/drag-and-drop area (PDF only), selected file details, a primary \"Convert\" action, progress/loading state, and a clear result area with a \"Download\" action (UI-driven). If actual conversion is not implemented, label the output clearly as a demo/simulated result to avoid misleading users.",
+      "reqIds": [
+        "REQ-21"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-step-by-step-usage-section-to-the-tool-page-with-clear-numbered-steps-explaining-how-to-use-the-pdf-to-word-tool-written-in-concise-user-friendly-english-and-aligned-with-the-interface-shown-on-the-page",
+      "title": "Add a \"Step-by-step usage\" section to the tool page with clear numbered steps explaining how to use the PDF to Word tool, written in concise, user-friendly English and aligned with the interface shown on the page.",
+      "reqIds": [
+        "REQ-22"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-benefits-section-to-the-tool-page-describing-the-advantages-of-using-the-tool-e-g-convenience-no-installation-privacy-first-messaging-consistent-with-the-site-using-a-modern-card-grid-presentation-with-icons-and-subtle-hover-transition-effects-consistent-with-the-rest-of-the-site",
+      "title": "Add a \"Benefits\" section to the tool page describing the advantages of using the tool (e.g., convenience, no installation, privacy-first messaging consistent with the site), using a modern card/grid presentation with icons and subtle hover/transition effects consistent with the rest of the site.",
+      "reqIds": [
+        "REQ-23"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-an-faq-section-to-the-tool-page-with-common-questions-and-answers-specific-to-pdf-to-word-online-free-e-g-privacy-file-size-limits-compatibility-quality-troubleshooting-use-an-accessible-accordion-collapsible-ui-pattern-consistent-with-the-project-s-component-library",
+      "title": "Add an FAQ section to the tool page with common questions and answers specific to \"PDF to Word online free\" (e.g., privacy, file size limits, compatibility, quality, troubleshooting). Use an accessible accordion/collapsible UI pattern consistent with the project’s component library.",
+      "reqIds": [
+        "REQ-24"
+      ],
+      "version": 1
+    }
+  ],
+  "new_feature_requests": [
+    {
+      "id": "AR-1",
+      "summary": "Create modern homepage layout for an online free tools website (mobile-responsive, fast) using theme color #eb347d",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-2",
+      "summary": "Add SEO optimization: meta title and meta description targeting keyword \"online free tools website\"",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-3",
+      "summary": "Hero section with floating small tool icons (animated particle-like background)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-4",
+      "summary": "Add intro content section describing free online tools",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-5",
+      "summary": "Add tool categories section: PDF tools, Image tools, Calculators, Utility tools",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-6",
+      "summary": "Add featured tools grid with hover effects",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-7",
+      "summary": "Implement smooth animations and transitions across the homepage",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-8",
+      "summary": "Create an About Us page with professional, trust-building content optimized for SEO",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-9",
+      "summary": "Create a Contact Us page with a simple contact form and professional supporting content",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-10",
+      "summary": "Create a Privacy Policy page with detailed, professional content",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-11",
+      "summary": "Create a Disclaimer page with detailed, professional content",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-12",
+      "summary": "Create a Terms & Conditions page with detailed, professional content",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-13",
+      "summary": "Add footer links to About, Contact, Privacy Policy, Disclaimer, and Terms & Conditions pages",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-14",
+      "summary": "Create a 4-column global footer: (1) logo + short description + social icons/links (Facebook, Twitter, Instagram, YouTube), (2) quick links (Home, About, Contact), (3) tool categories, (4) legal pages; include hover effects and smooth transitions",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-15",
+      "summary": "Create an SEO-optimized tool page for \"PDF to Word online free\" including: tool interface UI, step-by-step usage, benefits, FAQ section, and modern styling using theme color #eb347d",
+      "reqIds": [],
+      "status": "pending"
+    }
+  ],
+  "gameProjectType": "none",
+  "projectName": "Modern SEO-optimized multi-tool homepage with animated tool-icon hero background",
+  "clarification_mode": "instant",
+  "clarification_rounds": 0
+}

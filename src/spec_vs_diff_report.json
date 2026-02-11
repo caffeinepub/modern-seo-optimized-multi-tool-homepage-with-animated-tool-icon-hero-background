@@ -1,0 +1,16 @@
+{
+  "kind": "spec_vs_diff_report",
+  "version": "1.0",
+  "generatedAt": "2026-02-11T06:32:03.210Z",
+  "summary": "Diff adds a new PDF-to-Word tool page component, a reusable SEO hook to set/restore document title + meta description, and registers a new client-side route at `/tools/pdf-to-word-online-free` in `frontend/src/App.tsx`. The tool page includes client-side PDF type validation, simulated conversion progress, and a demo DOCX download generator. Page content is truncated, so presence/completeness of required sections (steps, benefits, full FAQ) cannot be fully verified from provided evidence.",
+  "missing_requirements": [],
+  "hallucinated_features": [],
+  "confidence": 0.62,
+  "changed_files": [
+    "frontend-file-summaries.txt",
+    "frontend/src/App.tsx",
+    "frontend/src/hooks/usePageSeo.ts",
+    "frontend/src/pages/tools/PdfToWordOnlineFreePage.tsx",
+    "project_state.json"
+  ]
+}

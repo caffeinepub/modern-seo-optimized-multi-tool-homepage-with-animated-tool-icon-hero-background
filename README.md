@@ -1,2 +1,3 @@
-# modern-seo-optimized-multi-tool-homepage-with-animated-tool-icon-hero-background
-Exported from Caffeine project: Modern SEO-optimized multi-tool homepage with animated tool-icon hero background
+## 
+
+To run app build and run docker image: `docker build -t app . docker run -it --network host app`

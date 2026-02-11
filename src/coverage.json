@@ -1,99 +1,56 @@
 {
   "kind": "coverage_report",
   "version": "1.0",
-  "generatedAt": "2026-02-11T08:26:39.758Z",
+  "generatedAt": "2026-02-11T09:10:40.757Z",
   "sources": {
     "buildRequest": true,
     "implementationPlan": true
   },
   "requirements": {
-    "total": 5,
-    "implemented": 5,
+    "total": 4,
+    "implemented": 2,
     "items": [
       {
         "id": "REQ-1",
-        "summary": "Increase mobile touch target sizes across interactive controls (buttons, clickable cards, links) to be tap-friendly, ensuring primary actions on tool pages (e.g., upload area, primary CTA buttons, secondary/reset buttons) are comfortable to use on small screens.",
-        "status": "implemented",
-        "plannedFiles": [
-          "frontend/src/index.css",
-          "frontend/src/components/home/FeaturedToolsGrid.tsx",
-          "frontend/src/components/home/ToolCategoriesSection.tsx",
-          "frontend/src/pages/tools/ImageCompressorOnlineFreePage.tsx",
-          "frontend/src/pages/tools/PdfToWordOnlineFreePage.tsx",
-          "frontend/src/pages/tools/ToolLandingOnlineFreeTemplate.tsx"
-        ],
-        "matchedFiles": [
-          "frontend/src/index.css",
-          "frontend/src/components/home/FeaturedToolsGrid.tsx",
-          "frontend/src/components/home/ToolCategoriesSection.tsx",
-          "frontend/src/pages/tools/ImageCompressorOnlineFreePage.tsx",
-          "frontend/src/pages/tools/PdfToWordOnlineFreePage.tsx",
-          "frontend/src/pages/tools/ToolLandingOnlineFreeTemplate.tsx"
-        ]
+        "summary": "Implement backend tool-processing endpoints in the single Motoko actor to support real file conversion/compression workflows for the existing tools:\n- PDF to Word (PDF in → DOCX out)\n- Image Compressor (image in → compressed image out)\n- Image Resize & Compress (image in + resize/format/quality options → processed image out)\nThe backend must accept file bytes, perform the requested operation by calling a real external API over HTTPS (or another real, non-placeholder processing implementation), and return processed bytes plus output filename and contentType.",
+        "status": "unknown",
+        "plannedFiles": [],
+        "matchedFiles": []
       },
       {
         "id": "REQ-2",
-        "summary": "Add a sticky bottom navigation on mobile that provides quick access to tool categories (e.g., PDF Tools, Image Tools, Calculators, Utility Tools). The bottom nav must be visible only on small screens, must not cover important CTAs, and must include an accessible interaction model (focus states, labels).",
-        "status": "implemented",
-        "plannedFiles": [
-          "frontend/src/components/navigation/MobileCategoryBottomNav.tsx",
-          "frontend/src/components/layout/AppLayout.tsx",
-          "frontend/src/index.css"
-        ],
-        "matchedFiles": [
-          "frontend/src/components/navigation/MobileCategoryBottomNav.tsx",
-          "frontend/src/components/layout/AppLayout.tsx",
-          "frontend/src/index.css"
-        ]
+        "summary": "Add a backend job/operation model that allows the frontend to show upload/progress states and reliably download outputs, while staying compatible with large files. Support at minimum:\n- An operation identifier (e.g., tool id + parameters)\n- Upload initiation and incremental upload (chunking) if needed\n- A processing step that runs after upload finalization\n- A retrieval step that returns the processed bytes + metadata\nUse the existing blob storage mixin already included in backend/main.mo where appropriate to store uploaded/processed blobs during the workflow.",
+        "status": "unknown",
+        "plannedFiles": [],
+        "matchedFiles": []
       },
       {
         "id": "REQ-3",
-        "summary": "Optimize mobile performance for images and icons by reducing unnecessary work during initial render and ensuring media loads efficiently (e.g., lazy-loading non-critical images, minimizing heavy visual effects on mobile, and respecting prefers-reduced-motion).",
+        "summary": "Replace the placeholder mutation in frontend/src/hooks/useQueries.ts so it calls the backend for real processing instead of throwing \"Backend processing not fully implemented\". The hook must support:\n- Selecting the operation (at least: pdf-to-word, image-compressor, image-resize-compress)\n- Passing operation parameters (for resize/compress: targetWidth, targetHeight, maintainAspectRatio, format, quality)\n- Upload progress callback compatible with the existing tool pages’ progress UI\n- Returning processedBytes, filename, and contentType",
         "status": "implemented",
         "plannedFiles": [
-          "frontend/src/pages/tools/ImageCompressorOnlineFreePage.tsx",
-          "frontend/src/components/home/ToolIconParticles.tsx",
-          "frontend/src/components/home/HeroSection.tsx",
-          "frontend/src/index.css"
+          "frontend/src/hooks/useQueries.ts",
+          "frontend/src/lib/toolProcessing.ts",
+          "frontend/src/backend.d.ts"
         ],
         "matchedFiles": [
-          "frontend/src/pages/tools/ImageCompressorOnlineFreePage.tsx",
-          "frontend/src/components/home/ToolIconParticles.tsx",
-          "frontend/src/components/home/HeroSection.tsx",
-          "frontend/src/index.css"
+          "frontend/src/hooks/useQueries.ts",
+          "frontend/src/lib/toolProcessing.ts"
         ]
       },
       {
         "id": "REQ-4",
-        "summary": "Ensure a clean one-column layout on small screens for key content sections (home tool surfaces and tool pages), preventing multi-column grids from feeling cramped and ensuring readable spacing/typography on mobile.",
+        "summary": "Update the tool pages to use backend-driven processing end-to-end (upload → process → download) and remove any client-side-only placeholder claims that contradict backend processing:\n- frontend/src/pages/tools/PdfToWordOnlineFreePage.tsx must convert via backend and download a DOCX.\n- frontend/src/pages/tools/ImageCompressorOnlineFreePage.tsx must compress via backend and download the processed image.\n- frontend/src/pages/tools/ImageResizeCompressOnlineFreePage.tsx must resize/compress via backend using the page’s current settings (dimensions, format, quality, aspect lock).\nEnsure the output filenames and content types are correct for downloads.",
         "status": "implemented",
         "plannedFiles": [
-          "frontend/src/components/home/ToolCategoriesSection.tsx",
-          "frontend/src/components/home/FeaturedToolsGrid.tsx",
-          "frontend/src/pages/tools/ToolLandingOnlineFreeTemplate.tsx",
           "frontend/src/pages/tools/PdfToWordOnlineFreePage.tsx",
-          "frontend/src/pages/tools/ImageCompressorOnlineFreePage.tsx"
+          "frontend/src/pages/tools/ImageCompressorOnlineFreePage.tsx",
+          "frontend/src/pages/tools/ImageResizeCompressOnlineFreePage.tsx"
         ],
         "matchedFiles": [
-          "frontend/src/components/home/ToolCategoriesSection.tsx",
-          "frontend/src/components/home/FeaturedToolsGrid.tsx",
-          "frontend/src/pages/tools/ToolLandingOnlineFreeTemplate.tsx",
           "frontend/src/pages/tools/PdfToWordOnlineFreePage.tsx",
-          "frontend/src/pages/tools/ImageCompressorOnlineFreePage.tsx"
-        ]
-      },
-      {
-        "id": "REQ-5",
-        "summary": "Add smooth swipe-friendly interactions/animations on mobile for browsing tool/category content (e.g., horizontal swipeable rows or carousels with scroll-snap), while keeping motion subtle and performant.",
-        "status": "implemented",
-        "plannedFiles": [
-          "frontend/src/components/home/FeaturedToolsGrid.tsx",
-          "frontend/src/index.css",
-          "frontend/src/pages/HomePage.tsx"
-        ],
-        "matchedFiles": [
-          "frontend/src/components/home/FeaturedToolsGrid.tsx",
-          "frontend/src/index.css"
+          "frontend/src/pages/tools/ImageCompressorOnlineFreePage.tsx",
+          "frontend/src/pages/tools/ImageResizeCompressOnlineFreePage.tsx"
         ]
       }
     ]
@@ -103,17 +60,13 @@
     "feature_evidence.json",
     "frontend-file-summaries.txt",
     "frontend-implementation-plan.json",
-    "frontend/src/components/home/FeaturedToolsGrid.tsx",
-    "frontend/src/components/home/HeroSection.tsx",
-    "frontend/src/components/home/ToolCategoriesSection.tsx",
-    "frontend/src/components/home/ToolIconParticles.tsx",
-    "frontend/src/components/layout/AppLayout.tsx",
-    "frontend/src/components/navigation/MobileCategoryBottomNav.tsx",
-    "frontend/src/index.css",
+    "frontend/src/hooks/useQueries.ts",
+    "frontend/src/lib/imageProcessor.ts",
+    "frontend/src/lib/pdfProcessor.ts",
+    "frontend/src/lib/toolProcessing.ts",
     "frontend/src/pages/tools/ImageCompressorOnlineFreePage.tsx",
+    "frontend/src/pages/tools/ImageResizeCompressOnlineFreePage.tsx",
     "frontend/src/pages/tools/PdfToWordOnlineFreePage.tsx",
-    "frontend/src/pages/tools/ToolLandingOnlineFreeTemplate.tsx",
-    "frontend/tailwind.config.js",
     "project_state.json",
     "scratch/component-selection.json",
     "spec.md",

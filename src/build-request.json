@@ -1,121 +1,103 @@
 {
   "kind": "build_request",
-  "title": "Optimize mobile UX: tap targets, sticky bottom category nav, faster visuals, one-column layout, and swipe interactions",
+  "title": "Integrate backend processing for PDF and image tools (upload → process → download)",
   "priority": "normal",
   "requirements": [
     {
       "id": "REQ-1",
-      "text": "Increase mobile touch target sizes across interactive controls (buttons, clickable cards, links) to be tap-friendly, ensuring primary actions on tool pages (e.g., upload area, primary CTA buttons, secondary/reset buttons) are comfortable to use on small screens.",
-      "target": "frontend",
+      "text": "Implement backend tool-processing endpoints in the single Motoko actor to support real file conversion/compression workflows for the existing tools:\n- PDF to Word (PDF in → DOCX out)\n- Image Compressor (image in → compressed image out)\n- Image Resize & Compress (image in + resize/format/quality options → processed image out)\nThe backend must accept file bytes, perform the requested operation by calling a real external API over HTTPS (or another real, non-placeholder processing implementation), and return processed bytes plus output filename and contentType.",
+      "target": "backend",
       "source": {
         "messageIds": [
-          "msg-user"
+          "msg-4"
         ],
         "quotes": [
-          "Optimize mobile user experience:\n\n- Larger tap-friendly buttons"
+          "Convert all tool pages into real working tools by adding backend integration:\n- Use APIs or serverless functions\n- For PDF tools use real PDF conversion API\n- For Image tools use real compression/resize API\nEnsure upload → process → download works correctly."
         ]
       },
       "acceptanceCriteria": [
-        "On screens <768px wide, primary and secondary buttons have a minimum comfortable tap area (no cramped text-only targets).",
-        "Clickable Card-based surfaces used as buttons (e.g., tool/category cards) have sufficient padding and a clear focus-visible ring for keyboard accessibility.",
-        "Tool pages (e.g., Image Compressor, PDF to Word) remain visually balanced after touch-target changes with no overflow/clipping."
+        "Backend exposes callable methods for each supported operation (PDF→DOCX, image compress, image resize+compress) and returns: processed bytes (Uint8Array/Blob), output filename, and content type.",
+        "Backend rejects unsupported input types (e.g., non-PDF for PDF→DOCX) with clear errors.",
+        "Backend errors are propagated as structured errors that the frontend can normalize via existing error handling.",
+        "All backend logic remains in backend/main.mo (single-actor architecture)."
       ]
     },
     {
       "id": "REQ-2",
-      "text": "Add a sticky bottom navigation on mobile that provides quick access to tool categories (e.g., PDF Tools, Image Tools, Calculators, Utility Tools). The bottom nav must be visible only on small screens, must not cover important CTAs, and must include an accessible interaction model (focus states, labels).",
-      "target": "frontend",
+      "text": "Add a backend job/operation model that allows the frontend to show upload/progress states and reliably download outputs, while staying compatible with large files. Support at minimum:\n- An operation identifier (e.g., tool id + parameters)\n- Upload initiation and incremental upload (chunking) if needed\n- A processing step that runs after upload finalization\n- A retrieval step that returns the processed bytes + metadata\nUse the existing blob storage mixin already included in backend/main.mo where appropriate to store uploaded/processed blobs during the workflow.",
+      "target": "backend",
       "source": {
         "messageIds": [
-          "msg-user"
+          "msg-4"
         ],
         "quotes": [
-          "- Sticky bottom navigation for tool categories"
+          "Ensure upload → process → download works correctly."
         ]
       },
       "acceptanceCriteria": [
-        "On small screens, a bottom navigation bar is fixed/sticky and remains available while scrolling.",
-        "The nav includes the main tool categories with icons and English labels.",
-        "The nav does not block key page actions (e.g., primary CTA buttons); content has adequate bottom padding when the nav is present.",
-        "All nav items are keyboard-focusable with visible focus styling and have accessible names."
+        "Frontend can upload a file, trigger processing, and then download the resulting file without relying on any client-side placeholder processing.",
+        "Intermediate and final artifacts are cleaned up after completion/failure (or have a clear retention policy), preventing unbounded storage growth.",
+        "The backend API supports reporting coarse progress states (e.g., uploading/processing/ready) sufficient for the current UI progress components to display meaningful status."
       ]
     },
     {
       "id": "REQ-3",
-      "text": "Optimize mobile performance for images and icons by reducing unnecessary work during initial render and ensuring media loads efficiently (e.g., lazy-loading non-critical images, minimizing heavy visual effects on mobile, and respecting prefers-reduced-motion).",
+      "text": "Replace the placeholder mutation in frontend/src/hooks/useQueries.ts so it calls the backend for real processing instead of throwing \"Backend processing not fully implemented\". The hook must support:\n- Selecting the operation (at least: pdf-to-word, image-compressor, image-resize-compress)\n- Passing operation parameters (for resize/compress: targetWidth, targetHeight, maintainAspectRatio, format, quality)\n- Upload progress callback compatible with the existing tool pages’ progress UI\n- Returning processedBytes, filename, and contentType",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-user"
+          "msg-4"
         ],
         "quotes": [
-          "- Faster load images and icons",
-          "Prioritize mobile speed and usability."
+          "Convert all tool pages into real working tools by adding backend integration... Ensure upload → process → download works correctly."
         ]
       },
       "acceptanceCriteria": [
-        "Non-critical images in page content use lazy-loading where applicable, and above-the-fold visuals remain fast.",
-        "Mobile initial render avoids expensive effects where possible (or degrades them) without breaking layout.",
-        "Animations and transitions respect prefers-reduced-motion (reduced motion results in no/less animation)."
+        "useProcessFile no longer throws the placeholder error and instead performs a real backend call sequence.",
+        "Upload progress updates the existing progress UI in tool pages that use a Progress component (e.g., PDF→Word, Image Compressor).",
+        "On success, the hook returns processedBytes + filename + contentType that can be downloaded via existing download helpers."
       ]
     },
     {
       "id": "REQ-4",
-      "text": "Ensure a clean one-column layout on small screens for key content sections (home tool surfaces and tool pages), preventing multi-column grids from feeling cramped and ensuring readable spacing/typography on mobile.",
+      "text": "Update the tool pages to use backend-driven processing end-to-end (upload → process → download) and remove any client-side-only placeholder claims that contradict backend processing:\n- frontend/src/pages/tools/PdfToWordOnlineFreePage.tsx must convert via backend and download a DOCX.\n- frontend/src/pages/tools/ImageCompressorOnlineFreePage.tsx must compress via backend and download the processed image.\n- frontend/src/pages/tools/ImageResizeCompressOnlineFreePage.tsx must resize/compress via backend using the page’s current settings (dimensions, format, quality, aspect lock).\nEnsure the output filenames and content types are correct for downloads.",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-user"
+          "msg-4"
         ],
         "quotes": [
-          "- One-column clean layout on small screens"
+          "Convert all tool pages into real working tools by adding backend integration... For PDF tools use real PDF conversion API... For Image tools use real compression/resize API"
         ]
       },
       "acceptanceCriteria": [
-        "On screens <640px, major grid sections render in a single-column layout with consistent vertical spacing.",
-        "Text remains readable without horizontal scrolling; no card content overflows its container on mobile.",
-        "Tool landing pages and tool interfaces remain centered and usable on mobile, with no side-by-side layouts that cause crowding."
-      ]
-    },
-    {
-      "id": "REQ-5",
-      "text": "Add smooth swipe-friendly interactions/animations on mobile for browsing tool/category content (e.g., horizontal swipeable rows or carousels with scroll-snap), while keeping motion subtle and performant.",
-      "target": "frontend",
-      "source": {
-        "messageIds": [
-          "msg-user"
-        ],
-        "quotes": [
-          "- Smooth swipe animations"
-        ]
-      },
-      "acceptanceCriteria": [
-        "On small screens, at least one key tool discovery surface (featured tools and/or categories) supports horizontal swipe browsing with smooth scrolling and snap behavior.",
-        "Swipe behavior works with touch and trackpad, and does not interfere with vertical page scrolling.",
-        "Motion is subtle and disabled/reduced when prefers-reduced-motion is enabled."
+        "PDF to Word: uploading a PDF and clicking convert results in a downloadable .docx file that opens in Word/Google Docs.",
+        "Image Compressor: uploading an image and clicking compress results in a downloadable processed image with the expected (compressed) size change in typical cases.",
+        "Image Resize & Compress: processing uses the selected width/height/format/quality settings and downloads the resulting file with the correct extension and content type.",
+        "Any privacy/security FAQ or note that currently states processing is \"entirely in your browser\" is updated to accurate English text consistent with backend processing.",
+        "Errors from the backend display in the existing Alert UI with a user-friendly message."
       ]
     }
   ],
   "constraints": [
-    "Frontend immutable paths must not be edited: frontend/src/hooks/useInternetIdentity.ts, frontend/src/hooks/useInternetIdentity.tsx, frontend/src/hooks/useActor.ts, frontend/src/main.tsx, frontend/src/components/ui (compose existing UI components instead).",
-    "Backend must remain single-actor (no additional backend services)."
+    "Backend must remain a single Motoko actor in backend/main.mo; add backend/migration.mo only if persistent state schema changes require it.",
+    "Do not edit files in frontend immutablePaths (e.g., frontend/src/hooks/useActor.ts, frontend/src/hooks/useInternetIdentity.ts, frontend/src/main.tsx, frontend/src/components/ui/*).",
+    "No external databases or additional backend services; any integration must be performed from the single canister backend (e.g., via HTTPS outcalls) or via real in-canister processing."
   ],
   "nonGoals": [
-    "Do not add new tool functionality or backend processing logic (this request is mobile UX/performance only).",
-    "Do not introduce third-party services (CDNs, external image optimization services, analytics, etc.)."
+    "Implementing third-party authentication beyond Internet Identity.",
+    "Adding new tool pages/routes beyond the existing tools registry and routes.",
+    "Real-time processing via WebSockets or push notifications.",
+    "Adding unrelated UI redesign or new marketing pages."
   ],
   "imageRequirements": {
     "required": [],
     "edits": []
   },
   "userProfileUpdate": {
-    "goalsToAdd": [
-      "Improve mobile speed and usability across the app UI"
-    ],
+    "goalsToAdd": [],
     "goalsToRemove": [],
-    "preferencesToAdd": [
-      "Use English for all user-facing text"
-    ],
+    "preferencesToAdd": [],
     "preferencesToRemove": [],
     "miscToAdd": [],
     "miscToRemove": [],

@@ -1,83 +1,84 @@
 {
   "kind": "spec_vs_diff_report",
   "version": "1.0",
-  "generatedAt": "2026-02-11T08:26:39.755Z",
-  "summary": "Diff implements most of the requested mobile UX upgrades: larger tap targets (via new utility classes applied to buttons/cards/upload areas), a mobile-only sticky bottom category nav with icons/labels and focus styling, a swipeable featured-tools row with scroll-snap, and some mobile/perf reductions plus prefers-reduced-motion handling for animations. However, explicit lazy-loading/efficient media loading changes are not evidenced, and several unrelated features/pages/routing/SEO changes appear added beyond the request scope.",
+  "generatedAt": "2026-02-11T09:10:40.754Z",
+  "summary": "The diff implements client-side PDF/image processing utilities and wires tool pages to use them via useProcessFile, but it does not add any backend Motoko endpoints, job/chunked upload model, or backend-driven upload→process→download flow as required.",
   "missing_requirements": [
     {
-      "id": "REQ-3",
-      "requirement": "Optimize mobile performance for images and icons by reducing unnecessary work during initial render and ensuring media loads efficiently (e.g., lazy-loading non-critical images).",
-      "reason": "The diff shows reduced visual effects/animations on mobile and prefers-reduced-motion handling, but there is no clear evidence of adding lazy-loading to non-critical images or other explicit media loading optimizations (e.g., loading=\"lazy\" on <img>).",
+      "id": "REQ-1",
+      "requirement": "Implement backend tool-processing endpoints in backend/main.mo for PDF→DOCX, image compress, and image resize+compress using a real external API over HTTPS (or real in-canister processing), returning processed bytes + filename + contentType, rejecting unsupported input types, and using structured errors.",
+      "reason": "No backend changes are shown at all (no backend/main.mo modifications). Processing is implemented entirely in the frontend via new client-side processors.",
       "evidence": [
-        "frontend/src/components/home/HeroSection.tsx",
-        "frontend/src/components/home/ToolIconParticles.tsx",
-        "frontend/src/index.css"
+        "frontend/src/lib/pdfProcessor.ts",
+        "frontend/src/lib/imageProcessor.ts",
+        "frontend/src/hooks/useQueries.ts"
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "requirement": "Add a backend job/operation model supporting operation identifiers, (chunked) upload initiation/incremental upload, finalize+process, retrieval of processed bytes+metadata, coarse progress states, and cleanup/retention policy using the existing blob storage mixin.",
+      "reason": "No backend API/model for jobs, chunked upload, progress states, blob storage usage, or cleanup is present in the diff; progress is simulated client-side by calling onProgress at fixed steps.",
+      "evidence": [
+        "frontend/src/hooks/useQueries.ts",
+        "frontend/src/lib/imageProcessor.ts",
+        "frontend/src/lib/pdfProcessor.ts"
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "requirement": "Update frontend/src/hooks/useQueries.ts to call the backend for real processing (operation selection, params for resize/compress, upload progress callback, return processedBytes/filename/contentType).",
+      "reason": "useProcessFile routes to client-side functions (convertPdfToWord/compressImage/resizeAndCompressImage) and does not call the backend actor for upload/process/download sequencing.",
+      "evidence": [
+        "frontend/src/hooks/useQueries.ts"
+      ]
+    },
+    {
+      "id": "REQ-4",
+      "requirement": "Update tool pages to use backend-driven processing end-to-end (upload→process→download) and update any privacy/security copy that claims processing is entirely in-browser.",
+      "reason": "The pages call useProcessFile, which performs client-side processing; there is no backend-driven workflow. The diff summary does not show any privacy/security copy updates.",
+      "evidence": [
+        "frontend/src/pages/tools/PdfToWordOnlineFreePage.tsx",
+        "frontend/src/pages/tools/ImageCompressorOnlineFreePage.tsx",
+        "frontend/src/pages/tools/ImageResizeCompressOnlineFreePage.tsx"
       ]
     }
   ],
   "hallucinated_features": [
     {
-      "description": "Addition of a /guides page and multiple guide detail pages, plus expanded routing to include them.",
-      "reason": "BuildRequest is mobile UX/performance only and does not request new content sections/pages like guides.",
+      "description": "Client-side image compression/resizing using canvas (compressImage, resizeAndCompressImage) with progress updates.",
+      "reason": "BuildRequest explicitly requires backend processing via Motoko actor and real external API (or real in-canister processing) rather than client-side placeholder processing.",
       "evidence": [
-        "frontend-file-summaries.txt (mentions new /guides page and three guide detail pages)",
-        "frontend/src/App.tsx (per summary)"
-      ]
-    },
-    {
-      "description": "Introduction of a new custom client-side router implementation (History API RouterProvider/Link/route matching).",
-      "reason": "BuildRequest does not ask to replace/add routing infrastructure; it focuses on mobile UX adjustments.",
-      "evidence": [
-        "frontend-file-summaries.txt (router.tsx described)",
-        "frontend/src/router.tsx"
-      ]
-    },
-    {
-      "description": "SEO/meta changes in index.html (title/description keyword targeting).",
-      "reason": "SEO changes were not requested; the request is specifically mobile UX/performance.",
-      "evidence": [
-        "frontend-file-summaries.txt (index.html meta title/description changes)",
-        "frontend/index.html"
-      ]
-    },
-    {
-      "description": "Creation of a placeholder React Query hooks file (useQueries.ts).",
-      "reason": "Not requested; also non-goal indicates no new tool functionality/backend logic, and this appears unrelated to mobile UX.",
-      "evidence": [
-        "frontend-file-summaries.txt",
+        "frontend/src/lib/imageProcessor.ts",
         "frontend/src/hooks/useQueries.ts"
       ]
     },
     {
-      "description": "Large-scale styling/theme additions (OKLCH pink color system, new animation tokens like page-enter, float delays, slide-up nav).",
-      "reason": "While some CSS is needed for mobile UX, the diff indicates broader re-theming/animation work beyond the specified requirements.",
+      "description": "Client-side PDF-to-Word conversion by extracting text from PDF bytes and emitting a minimal XML payload saved as .docx (not a real DOCX zip structure).",
+      "reason": "BuildRequest requires real backend conversion returning a DOCX output; the diff adds a simplified browser-side approach and even notes it is simplified and not a real DOCX structure.",
       "evidence": [
-        "frontend/src/index.css",
-        "frontend/tailwind.config.js"
+        "frontend/src/lib/pdfProcessor.ts",
+        "frontend/src/hooks/useQueries.ts"
       ]
     },
     {
-      "description": "Edits/additions to multiple non-requested informational pages (About/Contact/Privacy/Disclaimer) for styling/content.",
-      "reason": "BuildRequest does not mention updating these pages; scope is mobile UX for tool discovery/navigation/layout/performance.",
+      "description": "New frontend tool-processing helper module (types, filename/content-type generation, file validation) used to support the client-side processing path.",
+      "reason": "While some shared types could be useful, the BuildRequest specifically asks to integrate backend processing; this module supports the unrequested client-side processing implementation.",
       "evidence": [
-        "frontend-file-summaries.txt (AboutPage, ContactPage, PrivacyPage, DisclaimerPage summaries)"
+        "frontend/src/lib/toolProcessing.ts",
+        "frontend/src/hooks/useQueries.ts"
       ]
     }
   ],
-  "confidence": 0.74,
+  "confidence": 0.84,
   "changed_files": [
     "frontend-file-summaries.txt",
-    "frontend/src/components/home/FeaturedToolsGrid.tsx",
-    "frontend/src/components/home/HeroSection.tsx",
-    "frontend/src/components/home/ToolCategoriesSection.tsx",
-    "frontend/src/components/home/ToolIconParticles.tsx",
-    "frontend/src/components/layout/AppLayout.tsx",
-    "frontend/src/components/navigation/MobileCategoryBottomNav.tsx",
-    "frontend/src/index.css",
+    "frontend/src/hooks/useQueries.ts",
+    "frontend/src/lib/imageProcessor.ts",
+    "frontend/src/lib/pdfProcessor.ts",
+    "frontend/src/lib/toolProcessing.ts",
     "frontend/src/pages/tools/ImageCompressorOnlineFreePage.tsx",
+    "frontend/src/pages/tools/ImageResizeCompressOnlineFreePage.tsx",
     "frontend/src/pages/tools/PdfToWordOnlineFreePage.tsx",
-    "frontend/src/pages/tools/ToolLandingOnlineFreeTemplate.tsx",
-    "frontend/tailwind.config.js",
     "project_state.json"
   ]
 }

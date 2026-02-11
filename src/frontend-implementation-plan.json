@@ -1,166 +1,59 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "Mobile UX improvements: tap targets, sticky bottom category nav, performance, one-column layouts, and swipe discovery",
+  "title": "Frontend wiring for backend-driven file processing (upload → process → download)",
   "requirements": [
     {
-      "id": "REQ-1",
-      "summary": "Make mobile touch targets larger and more accessible across buttons, clickable cards, and key tool-page actions.",
-      "acceptanceCriteria": [
-        "On screens <768px wide, primary and secondary buttons have a minimum comfortable tap area (no cramped text-only targets).",
-        "Clickable Card-based surfaces used as buttons (e.g., tool/category cards) have sufficient padding and a clear focus-visible ring for keyboard accessibility.",
-        "Tool pages (e.g., Image Compressor, PDF to Word) remain visually balanced after touch-target changes with no overflow/clipping."
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/index.css",
-          "operation": "modify",
-          "description": "Add reusable mobile tap-target and focus-visible utility classes (e.g., minimum height/padding for interactive controls, consistent focus ring styling) and ensure reduced-motion-friendly transitions where applicable."
-        },
-        {
-          "path": "frontend/src/components/home/FeaturedToolsGrid.tsx",
-          "operation": "modify",
-          "description": "Increase padding and minimum interactive area for featured tool cards on mobile, and ensure keyboard focus styling is visible (focus-visible ring). Use shadcn-ui Card primitives to keep consistent visuals. Verify the component's usage instructions before implementing."
-        },
-        {
-          "path": "frontend/src/components/home/ToolCategoriesSection.tsx",
-          "operation": "modify",
-          "description": "Increase padding and minimum interactive area for category cards on mobile, and ensure keyboard focus styling is visible (focus-visible ring). Use shadcn-ui Card primitives to keep consistent visuals. Verify the component's usage instructions before implementing."
-        },
-        {
-          "path": "frontend/src/pages/tools/ImageCompressorOnlineFreePage.tsx",
-          "operation": "modify",
-          "description": "Ensure tool-page primary/secondary actions and upload surface are tap-friendly on mobile (apply min-height/padding utilities to the upload area, primary CTA, and reset button) while preserving layout balance. Use shadcn-ui Button for consistent sizing. Verify the component's usage instructions before implementing."
-        },
-        {
-          "path": "frontend/src/pages/tools/PdfToWordOnlineFreePage.tsx",
-          "operation": "modify",
-          "description": "Ensure tool-page primary/secondary actions and upload surface are tap-friendly on mobile (apply min-height/padding utilities to the upload area, primary CTA, and reset button) while preserving layout balance. Use shadcn-ui Button for consistent sizing. Verify the component's usage instructions before implementing."
-        },
-        {
-          "path": "frontend/src/pages/tools/ToolLandingOnlineFreeTemplate.tsx",
-          "operation": "modify",
-          "description": "Audit and adjust interactive link/card touch targets inside the tool landing template (e.g., related tools links) for mobile-friendly padding and consistent focus-visible styling. Verify the component's usage instructions before implementing."
-        }
-      ]
-    },
-    {
-      "id": "REQ-2",
-      "summary": "Add a mobile-only sticky bottom category navigation that is accessible and does not cover important page actions.",
-      "acceptanceCriteria": [
-        "On small screens, a bottom navigation bar is fixed/sticky and remains available while scrolling.",
-        "The nav includes the main tool categories with icons and English labels.",
-        "The nav does not block key page actions (e.g., primary CTA buttons); content has adequate bottom padding when the nav is present.",
-        "All nav items are keyboard-focusable with visible focus styling and have accessible names."
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/components/navigation/MobileCategoryBottomNav.tsx",
-          "operation": "create",
-          "description": "Create a mobile-only sticky bottom navigation component listing tool categories (PDF Tools, Image Tools, Calculators, Utility Tools) with icons + English labels, keyboard focus styles, and accessible names (aria-label). Use shadcn-ui Button (or composed shadcn-ui patterns) for consistent tap targets. Verify the component's usage instructions before implementing."
-        },
-        {
-          "path": "frontend/src/components/layout/AppLayout.tsx",
-          "operation": "modify",
-          "description": "Wire the MobileCategoryBottomNav into the shared layout and add mobile-only bottom padding/spacing to the main content so the sticky nav never covers CTAs (including tool-page primary buttons near the bottom)."
-        },
-        {
-          "path": "frontend/src/index.css",
-          "operation": "modify",
-          "description": "Add global helpers for sticky bottom nav spacing (including safe-area inset handling) and ensure focus-visible styling is consistent for nav items."
-        }
-      ]
-    },
-    {
       "id": "REQ-3",
-      "summary": "Improve mobile performance by lazy-loading non-critical media, reducing expensive visual effects on mobile, and respecting prefers-reduced-motion.",
+      "summary": "Replace the placeholder useProcessFile mutation with a real backend-driven processing flow supporting tool selection, parameters, progress, and returning bytes + filename + contentType.",
       "acceptanceCriteria": [
-        "Non-critical images in page content use lazy-loading where applicable, and above-the-fold visuals remain fast.",
-        "Mobile initial render avoids expensive effects where possible (or degrades them) without breaking layout.",
-        "Animations and transitions respect prefers-reduced-motion (reduced motion results in no/less animation)."
+        "useProcessFile no longer throws the placeholder error and instead performs a real backend call sequence.",
+        "Upload progress updates the existing progress UI in tool pages that use a Progress component (e.g., PDF→Word, Image Compressor).",
+        "On success, the hook returns processedBytes + filename + contentType that can be downloaded via existing download helpers."
       ],
       "file_operations": [
         {
-          "path": "frontend/src/pages/tools/ImageCompressorOnlineFreePage.tsx",
+          "path": "frontend/src/hooks/useQueries.ts",
           "operation": "modify",
-          "description": "Optimize preview media loading by setting non-critical preview image attributes (e.g., lazy-loading/async decoding where applicable) and ensure any motion indicators degrade under prefers-reduced-motion."
+          "description": "Replace the placeholder mutation with a backend call sequence driven by an explicit operation selector and parameters. Use the blob-storage component's ExternalBlob (from the generated frontend bindings) to upload file bytes with progress (ExternalBlob.withUploadProgress) and to support large-file-compatible workflows. Normalize thrown backend/transport errors via normalizeBackendError as today. Verify the component's usage instructions before implementing."
         },
         {
-          "path": "frontend/src/components/home/ToolIconParticles.tsx",
-          "operation": "modify",
-          "description": "Reduce initial render work on mobile by conditionally degrading/disabling the canvas particle animation on small screens and/or when prefers-reduced-motion is enabled, while keeping the hero layout intact."
+          "path": "frontend/src/lib/toolProcessing.ts",
+          "operation": "create",
+          "description": "Add shared frontend types and helpers for tool processing: operation identifiers (at least pdf-to-word, image-compressor, image-resize-compress), parameter typing (targetWidth/targetHeight/maintainAspectRatio/format/quality), and lightweight client-side validation/mapping used by useProcessFile and tool pages to keep parameters consistent."
         },
         {
-          "path": "frontend/src/components/home/HeroSection.tsx",
+          "path": "frontend/src/backend.d.ts",
           "operation": "modify",
-          "description": "Degrade or simplify expensive visual effects on mobile (e.g., reduce/disable heavy blurred gradient accents for small screens) while preserving the hero’s readability and layout."
-        },
-        {
-          "path": "frontend/src/index.css",
-          "operation": "modify",
-          "description": "Ensure animations/transitions used by shared UI effect classes properly respect prefers-reduced-motion (reduce or remove motion where necessary) without breaking layout."
+          "description": "Update the frontend backend interface typings to include the backend functions required by useProcessFile for initiating an operation, uploading/attaching bytes (or ExternalBlob references), triggering processing, and retrieving the processed bytes + metadata (filename, contentType), along with structured errors. Keep the changes aligned with the actual candid-generated API once backend work is complete."
         }
       ]
     },
     {
       "id": "REQ-4",
-      "summary": "Ensure key sections render as a clean one-column layout on small screens with readable spacing and no overflow.",
+      "summary": "Update the PDF→Word, Image Compressor, and Image Resize & Compress tool pages to run end-to-end via backend processing (upload → process → download) with correct filenames/content types and accurate privacy wording.",
       "acceptanceCriteria": [
-        "On screens <640px, major grid sections render in a single-column layout with consistent vertical spacing.",
-        "Text remains readable without horizontal scrolling; no card content overflows its container on mobile.",
-        "Tool landing pages and tool interfaces remain centered and usable on mobile, with no side-by-side layouts that cause crowding."
+        "PDF to Word: uploading a PDF and clicking convert results in a downloadable .docx file that opens in Word/Google Docs.",
+        "Image Compressor: uploading an image and clicking compress results in a downloadable processed image with the expected (compressed) size change in typical cases.",
+        "Image Resize & Compress: processing uses the selected width/height/format/quality settings and downloads the resulting file with the correct extension and content type.",
+        "Any privacy/security FAQ or note that currently states processing is \"entirely in your browser\" is updated to accurate English text consistent with backend processing.",
+        "Errors from the backend display in the existing Alert UI with a user-friendly message."
       ],
       "file_operations": [
         {
-          "path": "frontend/src/components/home/ToolCategoriesSection.tsx",
-          "operation": "modify",
-          "description": "Verify and adjust mobile grid behavior to ensure categories remain a comfortable one-column stack on <640px, with consistent spacing and no card content overflow."
-        },
-        {
-          "path": "frontend/src/components/home/FeaturedToolsGrid.tsx",
-          "operation": "modify",
-          "description": "Ensure the featured tools section’s mobile layout remains readable and non-cramped (one-column when stacked content is shown) and that card text does not overflow."
-        },
-        {
-          "path": "frontend/src/pages/tools/ToolLandingOnlineFreeTemplate.tsx",
-          "operation": "modify",
-          "description": "Audit tool landing template sections (hero, tool interface, steps/benefits/FAQ/related tools) for small-screen single-column friendliness, preventing cramped side-by-side layouts and eliminating horizontal scrolling."
-        },
-        {
           "path": "frontend/src/pages/tools/PdfToWordOnlineFreePage.tsx",
           "operation": "modify",
-          "description": "Ensure the tool interface content remains centered and mobile-friendly with consistent spacing and no horizontal overflow after touch-target and padding adjustments. Use shadcn-ui components as-is (compose only). Verify the component's usage instructions before implementing."
+          "description": "Switch the convert action to call useProcessFile with operation 'pdf-to-word' and use the returned filename and contentType when downloading (remove hardcoded DOCX content type). Ensure progress messaging reflects upload vs processing states based on mutation/progress callbacks, and keep backend errors surfaced through the existing destructive Alert."
         },
         {
           "path": "frontend/src/pages/tools/ImageCompressorOnlineFreePage.tsx",
           "operation": "modify",
-          "description": "Ensure the tool interface content (including preview area) remains centered and mobile-friendly with consistent spacing and no horizontal overflow after touch-target and padding adjustments. Use shadcn-ui components as-is (compose only). Verify the component's usage instructions before implementing."
-        }
-      ]
-    },
-    {
-      "id": "REQ-5",
-      "summary": "Add a subtle, performant swipe-friendly discovery surface on mobile using horizontal scroll with snap behavior and reduced-motion support.",
-      "acceptanceCriteria": [
-        "On small screens, at least one key tool discovery surface (featured tools and/or categories) supports horizontal swipe browsing with smooth scrolling and snap behavior.",
-        "Swipe behavior works with touch and trackpad, and does not interfere with vertical page scrolling.",
-        "Motion is subtle and disabled/reduced when prefers-reduced-motion is enabled."
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/components/home/FeaturedToolsGrid.tsx",
-          "operation": "modify",
-          "description": "Implement a mobile-only horizontal swipe row for featured tools using native overflow scrolling + scroll-snap (with a non-snap/grid layout on larger screens). Ensure cards have appropriate snap alignment, touch/trackpad support, and do not interfere with vertical scrolling."
+          "description": "Switch the compress action to call useProcessFile with operation 'image-compressor' and use the returned filename and contentType when downloading (stop deriving from the original file type). Preserve the existing preview, Progress UI, and error Alert behavior while relying on backend outputs."
         },
         {
-          "path": "frontend/src/index.css",
+          "path": "frontend/src/pages/tools/ImageResizeCompressOnlineFreePage.tsx",
           "operation": "modify",
-          "description": "Add any needed CSS helpers for a smooth, subtle swipe experience (e.g., scroll-snap behavior, optional scrollbar styling) and ensure reduced-motion disables any non-essential motion enhancements."
-        },
-        {
-          "path": "frontend/src/pages/HomePage.tsx",
-          "operation": "modify",
-          "description": "Ensure the updated swipe discovery surface is correctly composed on the homepage and remains a key mobile tool discovery element (no orphaned UI)."
+          "description": "Replace the current client-side resizeAndCompressImage canvas flow with backend-driven processing via useProcessFile using operation 'image-resize-compress' and passing the page’s current settings (targetWidth, targetHeight, maintainAspectRatio, format, quality). Update the UI state to show upload/progress/ready states using the existing Alert UI for errors and the existing Download button to download returned bytes using returned filename/contentType. Update any FAQ text that claims processing is entirely in-browser to accurate backend-processing wording."
         }
       ]
     }

@@ -9,6 +9,9 @@ import TermsPage from './pages/TermsPage';
 import NotFoundPage from './pages/NotFoundPage';
 import PdfToWordOnlineFreePage from './pages/tools/PdfToWordOnlineFreePage';
 import ImageCompressorOnlineFreePage from './pages/tools/ImageCompressorOnlineFreePage';
+import ImageResizeCompressOnlineFreePage from './pages/tools/ImageResizeCompressOnlineFreePage';
+import QrCodeGeneratorOnlineFreePage from './pages/tools/QrCodeGeneratorOnlineFreePage';
+import WordCountOnlineFreePage from './pages/tools/WordCountOnlineFreePage';
 import GuidesPage from './pages/GuidesPage';
 import GuideKeyboardShortcutsForFasterWorkPage from './pages/guides/GuideKeyboardShortcutsForFasterWorkPage';
 import GuideOrganizeBrowserTabsAndBookmarksPage from './pages/guides/GuideOrganizeBrowserTabsAndBookmarksPage';
@@ -32,6 +35,9 @@ function App() {
             { path: '/guides/pdf-workflow-checklist', component: <GuidePdfWorkflowChecklistPage /> },
             { path: '/tools/pdf-to-word-online-free', component: <PdfToWordOnlineFreePage /> },
             { path: '/tools/image-compressor-online-free', component: <ImageCompressorOnlineFreePage /> },
+            { path: '/tools/image-resize-compress-online-free', component: <ImageResizeCompressOnlineFreePage /> },
+            { path: '/tools/qr-code-generator-online-free', component: <QrCodeGeneratorOnlineFreePage /> },
+            { path: '/tools/word-count-online-free', component: <WordCountOnlineFreePage /> },
           ]}
           notFound={<NotFoundPage />}
         />

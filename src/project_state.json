@@ -1,50 +1,28 @@
 {
   "schemaVersion": "1.0.0",
   "projectStateVersion": 3,
-  "summary": "Project focused on optimizing the mobile user experience, prioritizing speed and usability.",
+  "summary": "Build a suite of real working PDF and image tools by integrating backend APIs/serverless functions to support upload → process → download flows.",
   "architectural_notes": [
-    "Mobile-first performance and usability are top priorities (optimize assets, layout, navigation, and interactions for small screens)."
+    "Use backend APIs or serverless functions to handle file processing (upload → process → download).",
+    "Use a real PDF conversion API for PDF tools.",
+    "Use real image compression/resize APIs for image tools."
   ],
   "known_issues": [],
   "isFixRequest": false,
   "existing_features": [
     {
-      "id": "feature-increase-mobile-touch-target-sizes-across-interactive-controls-buttons-clickable-cards-links-to-be-tap-friendly-ensuring-primary-actions-on-tool-pages-e-g-upload-area-primary-cta-buttons-secondary-reset-buttons-are-comfortable-to-use-on-small-screens",
-      "title": "Increase mobile touch target sizes across interactive controls (buttons, clickable cards, links) to be tap-friendly, ensuring primary actions on tool pages (e.g., upload area, primary CTA buttons, secondary/reset buttons) are comfortable to use on small screens.",
-      "reqIds": [
-        "REQ-1"
-      ],
-      "version": 1
-    },
-    {
-      "id": "feature-add-a-sticky-bottom-navigation-on-mobile-that-provides-quick-access-to-tool-categories-e-g-pdf-tools-image-tools-calculators-utility-tools-the-bottom-nav-must-be-visible-only-on-small-screens-must-not-cover-important-ctas-and-must-include-an-accessible-interaction-model-focus-states-labels",
-      "title": "Add a sticky bottom navigation on mobile that provides quick access to tool categories (e.g., PDF Tools, Image Tools, Calculators, Utility Tools). The bottom nav must be visible only on small screens, must not cover important CTAs, and must include an accessible interaction model (focus states, labels).",
-      "reqIds": [
-        "REQ-2"
-      ],
-      "version": 1
-    },
-    {
-      "id": "feature-optimize-mobile-performance-for-images-and-icons-by-reducing-unnecessary-work-during-initial-render-and-ensuring-media-loads-efficiently-e-g-lazy-loading-non-critical-images-minimizing-heavy-visual-effects-on-mobile-and-respecting-prefers-reduced-motion",
-      "title": "Optimize mobile performance for images and icons by reducing unnecessary work during initial render and ensuring media loads efficiently (e.g., lazy-loading non-critical images, minimizing heavy visual effects on mobile, and respecting prefers-reduced-motion).",
+      "id": "feature-replace-the-placeholder-mutation-in-frontend-src-hooks-usequeries-ts-so-it-calls-the-backend-for-real-processing-instead-of-throwing-backend-processing-not-fully-implemented-the-hook-must-support-selecting-the-operation-at-least-pdf-to-word-image-compressor-image-resize-compress-passing-operation-parameters-for-resize-compress-targetwidth-targetheight-maintainaspectratio-format-quality-upload-progress-callback-compatible-with-the-existing-tool-pages-progress-ui-returning-processedbytes-filename-and-contenttype",
+      "title": "Replace the placeholder mutation in frontend/src/hooks/useQueries.ts so it calls the backend for real processing instead of throwing \"Backend processing not fully implemented\". The hook must support:\n- Selecting the operation (at least: pdf-to-word, image-compressor, image-resize-compress)\n- Passing operation parameters (for resize/compress: targetWidth, targetHeight, maintainAspectRatio, format, quality)\n- Upload progress callback compatible with the existing tool pages’ progress UI\n- Returning processedBytes, filename, and contentType",
       "reqIds": [
         "REQ-3"
       ],
       "version": 1
     },
     {
-      "id": "feature-ensure-a-clean-one-column-layout-on-small-screens-for-key-content-sections-home-tool-surfaces-and-tool-pages-preventing-multi-column-grids-from-feeling-cramped-and-ensuring-readable-spacing-typography-on-mobile",
-      "title": "Ensure a clean one-column layout on small screens for key content sections (home tool surfaces and tool pages), preventing multi-column grids from feeling cramped and ensuring readable spacing/typography on mobile.",
+      "id": "feature-update-the-tool-pages-to-use-backend-driven-processing-end-to-end-upload-process-download-and-remove-any-client-side-only-placeholder-claims-that-contradict-backend-processing-frontend-src-pages-tools-pdftowordonlinefreepage-tsx-must-convert-via-backend-and-download-a-docx-frontend-src-pages-tools-imagecompressoronlinefreepage-tsx-must-compress-via-backend-and-download-the-processed-image-frontend-src-pages-tools-imageresizecompressonlinefreepage-tsx-must-resize-compress-via-backend-using-the-page-s-current-settings-dimensions-format-quality-aspect-lock-ensure-the-output-filenames-and-content-types-are-correct-for-downloads",
+      "title": "Update the tool pages to use backend-driven processing end-to-end (upload → process → download) and remove any client-side-only placeholder claims that contradict backend processing:\n- frontend/src/pages/tools/PdfToWordOnlineFreePage.tsx must convert via backend and download a DOCX.\n- frontend/src/pages/tools/ImageCompressorOnlineFreePage.tsx must compress via backend and download the processed image.\n- frontend/src/pages/tools/ImageResizeCompressOnlineFreePage.tsx must resize/compress via backend using the page’s current settings (dimensions, format, quality, aspect lock).\nEnsure the output filenames and content types are correct for downloads.",
       "reqIds": [
         "REQ-4"
-      ],
-      "version": 1
-    },
-    {
-      "id": "feature-add-smooth-swipe-friendly-interactions-animations-on-mobile-for-browsing-tool-category-content-e-g-horizontal-swipeable-rows-or-carousels-with-scroll-snap-while-keeping-motion-subtle-and-performant",
-      "title": "Add smooth swipe-friendly interactions/animations on mobile for browsing tool/category content (e.g., horizontal swipeable rows or carousels with scroll-snap), while keeping motion subtle and performant.",
-      "reqIds": [
-        "REQ-5"
       ],
       "version": 1
     }
@@ -52,36 +30,28 @@
   "new_feature_requests": [
     {
       "id": "AR-1",
-      "summary": "Improve mobile UX with larger tap-friendly buttons",
+      "summary": "Integrate backend APIs/serverless functions for all tool pages to enable real upload → process → download workflows (PDF conversion + image resize/compression).",
       "reqIds": [],
       "status": "pending"
     },
     {
       "id": "AR-2",
-      "summary": "Add sticky bottom navigation for tool categories on mobile",
-      "reqIds": [],
+      "summary": "Implement backend tool-processing endpoints in the single Motoko actor to support real file conversion/compression workflows for the existing tools:\n- PDF to Word (PDF in → DOCX out)\n- Image Compressor (image in → compressed image out)\n- Image Resize & Compress (image in + resize/format/quality options → processed image out)\nThe backend must accept file bytes, perform the requested operation by calling a real external API over HTTPS (or another real, non-placeholder processing implementation), and return processed bytes plus output filename and contentType.",
+      "reqIds": [
+        "REQ-1"
+      ],
       "status": "pending"
     },
     {
       "id": "AR-3",
-      "summary": "Optimize mobile performance by faster-loading images and icons",
-      "reqIds": [],
-      "status": "pending"
-    },
-    {
-      "id": "AR-4",
-      "summary": "Implement one-column clean layout for small screens",
-      "reqIds": [],
-      "status": "pending"
-    },
-    {
-      "id": "AR-5",
-      "summary": "Add smooth swipe animations for mobile interactions",
-      "reqIds": [],
+      "summary": "Add a backend job/operation model that allows the frontend to show upload/progress states and reliably download outputs, while staying compatible with large files. Support at minimum:\n- An operation identifier (e.g., tool id + parameters)\n- Upload initiation and incremental upload (chunking) if needed\n- A processing step that runs after upload finalization\n- A retrieval step that returns the processed bytes + metadata\nUse the existing blob storage mixin already included in backend/main.mo where appropriate to store uploaded/processed blobs during the workflow.",
+      "reqIds": [
+        "REQ-2"
+      ],
       "status": "pending"
     }
   ],
-  "projectName": "Optimize mobile UX: tap targets, sticky bottom category nav, faster visuals, one-column layout, and swipe interactions",
+  "projectName": "Integrate backend processing for PDF and image tools (upload → process → download)",
   "clarification_mode": "instant",
   "clarification_rounds": 0
 }

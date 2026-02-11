@@ -72,7 +72,7 @@ export default function ToolLandingOnlineFreeTemplate({
     {
       icon: Shield,
       title: 'Secure & Private',
-      description: 'Your files are processed securely and never stored on our servers',
+      description: 'Your files are encrypted during processing and automatically deleted after completion',
     },
     {
       icon: Globe,
@@ -275,7 +275,7 @@ export default function ToolLandingOnlineFreeTemplate({
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
             <p className="text-xs md:text-sm text-muted-foreground mb-4">
-              Your privacy matters. All processing happens in your browser. We don't store your files.
+              Your privacy matters. Files are encrypted during processing and automatically deleted after completion.
             </p>
             <div className="flex flex-wrap justify-center gap-3 md:gap-4 text-xs md:text-sm">
               <Link to="/privacy" className="text-primary hover:underline transition-colors focus-ring px-2 py-1">

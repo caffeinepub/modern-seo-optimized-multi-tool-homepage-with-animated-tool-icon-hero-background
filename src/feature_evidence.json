@@ -2,63 +2,20 @@
   "kind": "feature_evidence_report",
   "features": [
     {
-      "featureId": "feature-increase-mobile-touch-target-sizes-across-interactive-controls-buttons-clickable-cards-links-to-be-tap-friendly-ensuring-primary-actions-on-tool-pages-e-g-upload-area-primary-cta-buttons-secondary-reset-buttons-are-comfortable-to-use-on-small-screens",
-      "featureTitle": "Increase mobile touch target sizes across interactive controls (buttons, clickable cards, links) to be tap-friendly, ensuring primary actions on tool pages (e.g., upload area, primary CTA buttons, secondary/reset buttons) are comfortable to use on small screens.",
+      "featureId": "feature-replace-the-placeholder-mutation-in-frontend-src-hooks-usequeries-ts-so-it-calls-the-backend-for-real-processing-instead-of-throwing-backend-processing-not-fully-implemented-the-hook-must-support-selecting-the-operation-at-least-pdf-to-word-image-compressor-image-resize-compress-passing-operation-parameters-for-resize-compress-targetwidth-targetheight-maintainaspectratio-format-quality-upload-progress-callback-compatible-with-the-existing-tool-pages-progress-ui-returning-processedbytes-filename-and-contenttype",
+      "featureTitle": "Replace the placeholder mutation in frontend/src/hooks/useQueries.ts so it calls the backend for real processing instead of throwing \"Backend processing not fully implemented\". The hook must support:\n- Selecting the operation (at least: pdf-to-word, image-compressor, image-resize-compress)\n- Passing operation parameters (for resize/compress: targetWidth, targetHeight, maintainAspectRatio, format, quality)\n- Upload progress callback compatible with the existing tool pages’ progress UI\n- Returning processedBytes, filename, and contentType",
       "files": [
-        "frontend/src/components/home/FeaturedToolsGrid.tsx",
-        "frontend/src/components/home/ToolCategoriesSection.tsx",
-        "frontend/src/index.css",
-        "frontend/src/pages/tools/ImageCompressorOnlineFreePage.tsx",
-        "frontend/src/pages/tools/PdfToWordOnlineFreePage.tsx",
-        "frontend/src/pages/tools/ToolLandingOnlineFreeTemplate.tsx"
+        "frontend/src/hooks/useQueries.ts",
+        "frontend/src/lib/toolProcessing.ts"
       ],
       "components": [
         "core-infrastructure@1.0.2",
         "shadcn-ui@1.0.0",
         "build-template-react@1.0.0",
         "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-1"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-add-a-sticky-bottom-navigation-on-mobile-that-provides-quick-access-to-tool-categories-e-g-pdf-tools-image-tools-calculators-utility-tools-the-bottom-nav-must-be-visible-only-on-small-screens-must-not-cover-important-ctas-and-must-include-an-accessible-interaction-model-focus-states-labels",
-      "featureTitle": "Add a sticky bottom navigation on mobile that provides quick access to tool categories (e.g., PDF Tools, Image Tools, Calculators, Utility Tools). The bottom nav must be visible only on small screens, must not cover important CTAs, and must include an accessible interaction model (focus states, labels).",
-      "files": [
-        "frontend/src/components/layout/AppLayout.tsx",
-        "frontend/src/components/navigation/MobileCategoryBottomNav.tsx",
-        "frontend/src/index.css"
-      ],
-      "components": [
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-2"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-optimize-mobile-performance-for-images-and-icons-by-reducing-unnecessary-work-during-initial-render-and-ensuring-media-loads-efficiently-e-g-lazy-loading-non-critical-images-minimizing-heavy-visual-effects-on-mobile-and-respecting-prefers-reduced-motion",
-      "featureTitle": "Optimize mobile performance for images and icons by reducing unnecessary work during initial render and ensuring media loads efficiently (e.g., lazy-loading non-critical images, minimizing heavy visual effects on mobile, and respecting prefers-reduced-motion).",
-      "files": [
-        "frontend/src/components/home/HeroSection.tsx",
-        "frontend/src/components/home/ToolIconParticles.tsx",
-        "frontend/src/index.css",
-        "frontend/src/pages/tools/ImageCompressorOnlineFreePage.tsx"
-      ],
-      "components": [
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
+        "github-export-icp-cli@1.0.0",
+        "http-outcalls@3.0.0",
+        "blob-storage@4.0.0"
       ],
       "testIds": [
         "REQ-3"
@@ -66,43 +23,24 @@
       "confidence": "high"
     },
     {
-      "featureId": "feature-ensure-a-clean-one-column-layout-on-small-screens-for-key-content-sections-home-tool-surfaces-and-tool-pages-preventing-multi-column-grids-from-feeling-cramped-and-ensuring-readable-spacing-typography-on-mobile",
-      "featureTitle": "Ensure a clean one-column layout on small screens for key content sections (home tool surfaces and tool pages), preventing multi-column grids from feeling cramped and ensuring readable spacing/typography on mobile.",
+      "featureId": "feature-update-the-tool-pages-to-use-backend-driven-processing-end-to-end-upload-process-download-and-remove-any-client-side-only-placeholder-claims-that-contradict-backend-processing-frontend-src-pages-tools-pdftowordonlinefreepage-tsx-must-convert-via-backend-and-download-a-docx-frontend-src-pages-tools-imagecompressoronlinefreepage-tsx-must-compress-via-backend-and-download-the-processed-image-frontend-src-pages-tools-imageresizecompressonlinefreepage-tsx-must-resize-compress-via-backend-using-the-page-s-current-settings-dimensions-format-quality-aspect-lock-ensure-the-output-filenames-and-content-types-are-correct-for-downloads",
+      "featureTitle": "Update the tool pages to use backend-driven processing end-to-end (upload → process → download) and remove any client-side-only placeholder claims that contradict backend processing:\n- frontend/src/pages/tools/PdfToWordOnlineFreePage.tsx must convert via backend and download a DOCX.\n- frontend/src/pages/tools/ImageCompressorOnlineFreePage.tsx must compress via backend and download the processed image.\n- frontend/src/pages/tools/ImageResizeCompressOnlineFreePage.tsx must resize/compress via backend using the page’s current settings (dimensions, format, quality, aspect lock).\nEnsure the output filenames and content types are correct for downloads.",
       "files": [
-        "frontend/src/components/home/FeaturedToolsGrid.tsx",
-        "frontend/src/components/home/ToolCategoriesSection.tsx",
         "frontend/src/pages/tools/ImageCompressorOnlineFreePage.tsx",
-        "frontend/src/pages/tools/PdfToWordOnlineFreePage.tsx",
-        "frontend/src/pages/tools/ToolLandingOnlineFreeTemplate.tsx"
+        "frontend/src/pages/tools/ImageResizeCompressOnlineFreePage.tsx",
+        "frontend/src/pages/tools/PdfToWordOnlineFreePage.tsx"
       ],
       "components": [
         "core-infrastructure@1.0.2",
         "shadcn-ui@1.0.0",
         "build-template-react@1.0.0",
         "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
+        "github-export-icp-cli@1.0.0",
+        "http-outcalls@3.0.0",
+        "blob-storage@4.0.0"
       ],
       "testIds": [
         "REQ-4"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-add-smooth-swipe-friendly-interactions-animations-on-mobile-for-browsing-tool-category-content-e-g-horizontal-swipeable-rows-or-carousels-with-scroll-snap-while-keeping-motion-subtle-and-performant",
-      "featureTitle": "Add smooth swipe-friendly interactions/animations on mobile for browsing tool/category content (e.g., horizontal swipeable rows or carousels with scroll-snap), while keeping motion subtle and performant.",
-      "files": [
-        "frontend/src/components/home/FeaturedToolsGrid.tsx",
-        "frontend/src/index.css"
-      ],
-      "components": [
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-5"
       ],
       "confidence": "high"
     }

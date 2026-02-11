@@ -18,6 +18,24 @@ export const toolsRegistry: ToolMetadata[] = [
     path: '/tools/image-compressor-online-free',
     category: 'image',
   },
+  {
+    id: 'image-resize-compress',
+    name: 'Image Resize & Compress Online Free',
+    path: '/tools/image-resize-compress-online-free',
+    category: 'image',
+  },
+  {
+    id: 'qr-code-generator',
+    name: 'QR Code Generator Online Free',
+    path: '/tools/qr-code-generator-online-free',
+    category: 'utility',
+  },
+  {
+    id: 'word-count',
+    name: 'Word Count Online Free',
+    path: '/tools/word-count-online-free',
+    category: 'utility',
+  },
 ];
 
 export function getRelatedTools(currentToolPath: string, maxResults: number = 3): ToolMetadata[] {

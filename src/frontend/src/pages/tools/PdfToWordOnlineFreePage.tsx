@@ -1,29 +1,40 @@
 import { useState, useRef, ChangeEvent } from 'react';
-import { FileText, Upload, Download, CheckCircle2 } from 'lucide-react';
+import { FileText, Upload, Download, CheckCircle2, AlertCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
+import { Alert, AlertDescription } from '@/components/ui/alert';
 import ToolLandingOnlineFreeTemplate from './ToolLandingOnlineFreeTemplate';
+import { useProcessFile } from '@/hooks/useQueries';
+import { downloadProcessedFile } from '@/lib/download';
 
 export default function PdfToWordOnlineFreePage() {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
-  const [isConverting, setIsConverting] = useState(false);
-  const [conversionProgress, setConversionProgress] = useState(0);
-  const [isComplete, setIsComplete] = useState(false);
-  const [error, setError] = useState<string>('');
+  const [uploadProgress, setUploadProgress] = useState(0);
+  const [processedData, setProcessedData] = useState<{ 
+    bytes: Uint8Array; 
+    filename: string;
+    contentType: string;
+    originalSize?: number;
+    processedSize?: number;
+  } | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const processFileMutation = useProcessFile();
 
   const handleFileSelect = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
       if (file.type !== 'application/pdf') {
-        setError('Please select a valid PDF file');
+        processFileMutation.reset();
         setSelectedFile(null);
+        setProcessedData(null);
+        setUploadProgress(0);
         return;
       }
-      setError('');
+      processFileMutation.reset();
       setSelectedFile(file);
-      setIsComplete(false);
-      setConversionProgress(0);
+      setProcessedData(null);
+      setUploadProgress(0);
     }
   };
 
@@ -32,14 +43,16 @@ export default function PdfToWordOnlineFreePage() {
     const file = e.dataTransfer.files[0];
     if (file) {
       if (file.type !== 'application/pdf') {
-        setError('Please drop a valid PDF file');
+        processFileMutation.reset();
         setSelectedFile(null);
+        setProcessedData(null);
+        setUploadProgress(0);
         return;
       }
-      setError('');
+      processFileMutation.reset();
       setSelectedFile(file);
-      setIsComplete(false);
-      setConversionProgress(0);
+      setProcessedData(null);
+      setUploadProgress(0);
     }
   };
 
@@ -50,44 +63,55 @@ export default function PdfToWordOnlineFreePage() {
   const handleConvert = async () => {
     if (!selectedFile) return;
 
-    setIsConverting(true);
-    setConversionProgress(0);
+    setUploadProgress(0);
+    setProcessedData(null);
 
-    // Simulate conversion progress
-    const interval = setInterval(() => {
-      setConversionProgress((prev) => {
-        if (prev >= 100) {
-          clearInterval(interval);
-          setIsConverting(false);
-          setIsComplete(true);
-          return 100;
-        }
-        return prev + 10;
-      });
-    }, 200);
+    processFileMutation.mutate(
+      {
+        file: selectedFile,
+        operation: 'pdf-to-word',
+        onProgress: (percentage) => {
+          setUploadProgress(percentage);
+        },
+      },
+      {
+        onSuccess: (result) => {
+          setProcessedData({
+            bytes: result.processedBytes,
+            filename: result.filename,
+            contentType: result.contentType,
+            originalSize: result.originalSize,
+            processedSize: result.processedSize,
+          });
+          setUploadProgress(100);
+        },
+        onError: () => {
+          setUploadProgress(0);
+        },
+      }
+    );
   };
 
   const handleDownload = () => {
-    // Create a demo Word file blob
-    const demoContent = `PDF to Word Conversion Demo\n\nOriginal file: ${selectedFile?.name}\n\nThis is a demonstration of the PDF to Word conversion interface. In a production environment, this would contain the actual converted content from your PDF file.\n\nThe conversion process would preserve:\n- Text formatting\n- Images and graphics\n- Tables and layouts\n- Headers and footers\n\nThank you for using our PDF to Word online free tool!`;
-    
-    const blob = new Blob([demoContent], { type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = selectedFile?.name.replace('.pdf', '.docx') || 'converted.docx';
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
+    if (!processedData) return;
+
+    downloadProcessedFile(
+      processedData.bytes,
+      processedData.filename,
+      processedData.contentType
+    );
   };
 
   const handleReset = () => {
     setSelectedFile(null);
-    setIsComplete(false);
-    setConversionProgress(0);
-    setError('');
+    setProcessedData(null);
+    setUploadProgress(0);
+    processFileMutation.reset();
   };
+
+  const isProcessing = processFileMutation.isPending;
+  const isComplete = !!processedData && !processFileMutation.isPending;
+  const hasError = processFileMutation.isError;
 
   const toolInterface = (
     <div className="space-y-6">
@@ -95,8 +119,10 @@ export default function PdfToWordOnlineFreePage() {
       <div
         onDrop={handleDrop}
         onDragOver={handleDragOver}
-        onClick={() => fileInputRef.current?.click()}
-        className="border-2 border-dashed border-border rounded-lg p-6 md:p-12 text-center cursor-pointer hover:border-primary hover:bg-primary/5 transition-all duration-300 tap-target"
+        onClick={() => !isProcessing && fileInputRef.current?.click()}
+        className={`border-2 border-dashed border-border rounded-lg p-6 md:p-12 text-center transition-all duration-300 tap-target ${
+          isProcessing ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer hover:border-primary hover:bg-primary/5'
+        }`}
       >
         <Upload className="w-12 h-12 mx-auto mb-4 text-muted-foreground" />
         <p className="text-base md:text-lg font-medium mb-2">
@@ -112,13 +138,18 @@ export default function PdfToWordOnlineFreePage() {
           onChange={handleFileSelect}
           className="hidden"
           aria-label="Select PDF file"
+          disabled={isProcessing}
         />
       </div>
 
-      {error && (
-        <div className="bg-destructive/10 text-destructive px-4 py-3 rounded-lg text-sm">
-          {error}
-        </div>
+      {/* Error Alert */}
+      {hasError && (
+        <Alert variant="destructive">
+          <AlertCircle className="h-4 w-4" />
+          <AlertDescription>
+            {processFileMutation.error?.message || 'An error occurred during conversion. Please try again.'}
+          </AlertDescription>
+        </Alert>
       )}
 
       {/* File Details */}
@@ -142,11 +173,11 @@ export default function PdfToWordOnlineFreePage() {
       {selectedFile && !isComplete && (
         <Button
           onClick={handleConvert}
-          disabled={isConverting}
+          disabled={isProcessing}
           className="w-full tap-target-mobile text-base md:text-lg"
           size="lg"
         >
-          {isConverting ? (
+          {isProcessing ? (
             <>
               <span className="animate-spin mr-2">⚙️</span>
               Converting...
@@ -161,11 +192,11 @@ export default function PdfToWordOnlineFreePage() {
       )}
 
       {/* Progress Bar */}
-      {isConverting && (
+      {isProcessing && (
         <div className="space-y-2">
-          <Progress value={conversionProgress} className="h-2" />
+          <Progress value={uploadProgress} className="h-2" />
           <p className="text-sm text-center text-muted-foreground">
-            Converting... {conversionProgress}%
+            {uploadProgress < 100 ? `Processing... ${uploadProgress}%` : 'Finalizing conversion...'}
           </p>
         </div>
       )}
@@ -177,7 +208,7 @@ export default function PdfToWordOnlineFreePage() {
             <CheckCircle2 className="w-12 h-12 mx-auto mb-3 text-primary" />
             <h3 className="text-lg font-semibold mb-2">Conversion Complete!</h3>
             <p className="text-sm text-muted-foreground mb-4">
-              Your PDF has been converted to Word format successfully (demo)
+              Your PDF has been converted to Word format successfully
             </p>
             <Button onClick={handleDownload} size="lg" className="w-full md:w-auto tap-target-mobile">
               <Download className="w-5 h-5 mr-2" />
@@ -219,7 +250,7 @@ export default function PdfToWordOnlineFreePage() {
         {
           step: '3',
           title: 'Wait for Processing',
-          description: 'Watch the progress bar as your PDF is converted while preserving formatting and layout.',
+          description: 'Watch the progress bar as your PDF is processed and converted while extracting text content.',
         },
         {
           step: '4',
@@ -230,11 +261,11 @@ export default function PdfToWordOnlineFreePage() {
       faqs={[
         {
           question: 'Is this PDF to Word converter really free?',
-          answer: 'Yes, our PDF to Word online free tool is completely free to use. There are no hidden charges, subscription fees, or limitations on the number of conversions. This is a demonstration interface showing how the conversion process works.',
+          answer: 'Yes, our PDF to Word online free tool is completely free to use. There are no hidden charges, subscription fees, or limitations on the number of conversions.',
         },
         {
           question: 'Will the formatting be preserved?',
-          answer: 'Our converter is designed to preserve the original formatting, including text styles, images, tables, and layout. This demonstration shows the conversion workflow. In production, advanced algorithms would ensure maximum fidelity to the original document.',
+          answer: 'Our converter extracts text content from PDFs and creates editable Word documents. Basic text formatting is preserved, though complex layouts may require manual adjustment.',
         },
         {
           question: 'What file format will I get?',
@@ -242,15 +273,15 @@ export default function PdfToWordOnlineFreePage() {
         },
         {
           question: 'Are my PDF files secure?',
-          answer: 'Your privacy is our priority. This demonstration interface processes files locally in your browser. In a production environment, files would be encrypted during transfer and automatically deleted from servers after conversion.',
+          answer: 'Your privacy is our priority. All processing happens directly in your browser—your files never leave your device and are not uploaded to any server.',
         },
         {
           question: 'What is the maximum file size?',
-          answer: 'This demonstration accepts various PDF sizes. A production version would typically support PDFs up to 50MB for free users, which covers most documents including those with images.',
+          answer: 'Since processing happens in your browser, file size limits depend on your device\'s memory. Most PDFs up to 50MB should work without issues.',
         },
         {
           question: 'Can I convert scanned PDFs?',
-          answer: 'This demonstration focuses on text-based PDFs. A production version with OCR (Optical Character Recognition) capabilities would be able to convert scanned PDFs and images to editable Word documents.',
+          answer: 'This tool works best with text-based PDFs. Scanned PDFs (images of documents) may not produce optimal results as they require OCR (Optical Character Recognition) capabilities.',
         },
       ]}
     />
